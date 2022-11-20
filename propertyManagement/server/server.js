@@ -12,7 +12,7 @@ app.use(express.json());
 const db = mysql.createConnection({
     user: 'root',
     host: 'localhost',
-    password: '',
+    password: 'password',
     database: 'happyC'
 });
 
@@ -174,5 +174,5 @@ app.get('/login', (req, res) => {
 
 */
 app.listen(3001, () => {
-    console.log("The Server is running on Port 3001!")
+    console.log("The Server is running on Port 3000!")
 });

@@ -15,6 +15,52 @@ function CreateAccount() {
 
     const [loginStatus, setLoginStatus] = useState("")
 
+
+    const validateUser=userData => {
+        const errors={};
+        if(!userData.name){
+            errors.name="Please Enter your First Name";
+        } else if(userData.name.legnth > 20){
+            errors.name="Your first name should not exceed 20 characters";
+        }
+        if(!userData.lastname){
+            errors.lastname="Please Enter your Last Name";
+        } else if(userData.lastname.legnth > 20){
+            errors.lastname="Your last name should not exceed 20 characters";
+        }
+
+        if(!userData.username){
+            errors.username="Please Enter a username";
+        } else if(userData.username.legnth > 20){
+            errors.username="Your username should not exceed 20 characters";
+        }
+
+        if(!userData.password){
+            errors.username="Please Enter a password";
+        } else if(userData.password.legnth < 8){
+            errors.username="Your password needs to be at least 8 characters";
+        }
+
+        if (!userData.email) {
+            errors.email = "Please enter your email";
+          } else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(userData.email)) {
+            errors.email = 'Invalid email address';
+          }
+        
+        if (!userData.phone) {
+        errors.phone = "Please enter your phone number";
+        } else if (!/^(\d{2})? \d{10}$/i.test(userData.phone)) {
+        errors.phone = 'Invalid phone number';
+        }
+        
+
+        
+
+        return errors; 
+
+    }
+
+
     const register = () => {
         Axios.post('http://localhost:3001/register', {
             username: usernameCreate,
@@ -32,11 +78,13 @@ function CreateAccount() {
             }
             console.log(response.data);
         });
+
     };
 
     return (
         <div className="App">
             <div className="information">
+            <div className="float-left">
             <div className="givemesomeroomtobreathe">
                 <select onChange={(e) => {setCategoryCreate(e.target.value);}}>
                     <option value="h" disabled selected hidden>Select an Account Type</option>
@@ -95,7 +143,7 @@ function CreateAccount() {
                     type='phone' 
                     placeholder='Phone' 
                     onChange={(e) => { 
-                        setPhoneCreate(e.target.value);
+                        setPhoneCreate(e.target.value); 
                     }}
                 />
                 
@@ -104,6 +152,9 @@ function CreateAccount() {
             
             <h2>{loginStatus}</h2>
             <button onClick={register}>Register</button>
+                
+            </div>
+            
             </div>
         </div>
     );

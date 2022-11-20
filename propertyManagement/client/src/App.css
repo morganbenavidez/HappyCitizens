@@ -8,9 +8,8 @@
 .information {
   display: flex;
   flex-direction: column;
-  justify-content: center;
   width:100%;
-  background-color: #cd8b62;
+  background-color: black;
   align-items: center;
   padding-top: 20px;
   padding-bottom: 20px;
@@ -48,7 +47,7 @@ button:hover{
 .navigationMenu {
   text-align: center;
   
-  background-color: #eed7a1;
+  background-color: black;
   padding-top: 20px;
   padding-bottom: 30px;
   /*
@@ -65,11 +64,11 @@ button:hover{
   display: flex;
   flex-direction: row;
   justify-content: center;
-  background-color: #f7efd2;
+  background-color: black
 }
 .navigationMenuItem {
   padding: 30px;
-  background-color: #f7efd2;
+  background-color: black;
 
 }
 
