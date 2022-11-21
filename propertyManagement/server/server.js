@@ -15,7 +15,7 @@ const MySQLStore = require("connect-mysql")(session);
 const SQL_CONFIG = {
     user: 'root',
     host: 'localhost',
-    password: '123456789',
+    password: '',
     database: 'happycitizens'
 };
 
