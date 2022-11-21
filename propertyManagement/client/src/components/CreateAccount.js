@@ -53,13 +53,27 @@ function CreateAccount() {
         errors.phone = 'Invalid phone number';
         }
         
+        if (errors.legnth == 0){
+            register(); 
+        }
 
-        
-
-        return errors; 
-
+        else{
+            return errors; 
+        }
     }
+    
+    // const validateData = (email, phone, name, blah) => {
+    //     var x = True
+    //     checkemail 
+    //         if passes validation: x = True
+    //         if fails validation: x = False
+    //         showSpecifi
+    //     checkphone
 
+    //     if False: showHiddenDivs
+    //     else:
+    //         Call register
+    // }
 
     const register = () => {
         Axios.post('http://localhost:3001/register', {
@@ -97,7 +111,7 @@ function CreateAccount() {
                 <input 
                     type='text' 
                     placeholder='username' 
-                    onChange={(e) => { 
+                    onChange={(e) => {
                         setUsernameCreate(e.target.value);
                     }}
                 />
@@ -125,6 +139,7 @@ function CreateAccount() {
                     type='text' 
                     placeholder='Last Name' 
                     onChange={(e) => { 
+
                         setLastnameCreate(e.target.value);
                     }}
                 />
