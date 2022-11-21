@@ -15,7 +15,6 @@ function CreateAccount() {
 
     const [loginStatus, setLoginStatus] = useState("")
 
-
     const validateUser=userData => {
         const errors={};
         if(!userData.name){
@@ -61,19 +60,6 @@ function CreateAccount() {
             return errors; 
         }
     }
-    
-    // const validateData = (email, phone, name, blah) => {
-    //     var x = True
-    //     checkemail 
-    //         if passes validation: x = True
-    //         if fails validation: x = False
-    //         showSpecifi
-    //     checkphone
-
-    //     if False: showHiddenDivs
-    //     else:
-    //         Call register
-    // }
 
     const register = () => {
         Axios.post('http://localhost:3001/register', {
@@ -92,13 +78,11 @@ function CreateAccount() {
             }
             console.log(response.data);
         });
-
     };
 
     return (
         <div className="App">
             <div className="information">
-            <div className="float-left">
             <div className="givemesomeroomtobreathe">
                 <select onChange={(e) => {setCategoryCreate(e.target.value);}}>
                     <option value="h" disabled selected hidden>Select an Account Type</option>
@@ -111,7 +95,7 @@ function CreateAccount() {
                 <input 
                     type='text' 
                     placeholder='username' 
-                    onChange={(e) => {
+                    onChange={(e) => { 
                         setUsernameCreate(e.target.value);
                     }}
                 />
@@ -139,7 +123,6 @@ function CreateAccount() {
                     type='text' 
                     placeholder='Last Name' 
                     onChange={(e) => { 
-
                         setLastnameCreate(e.target.value);
                     }}
                 />
@@ -158,7 +141,7 @@ function CreateAccount() {
                     type='phone' 
                     placeholder='Phone' 
                     onChange={(e) => { 
-                        setPhoneCreate(e.target.value); 
+                        setPhoneCreate(e.target.value);
                     }}
                 />
                 
@@ -167,9 +150,6 @@ function CreateAccount() {
             
             <h2>{loginStatus}</h2>
             <button onClick={register}>Register</button>
-                
-            </div>
-            
             </div>
         </div>
     );

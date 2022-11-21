@@ -43,6 +43,8 @@ export function CitizenProfile() {
             state: state,
             purchaseprice:purchaseprice,
             propertycategory: propertycategory,
+        }, {
+            withCredentials: true
         }).then(() => {
             console.log("successful");
             setPropertyList([
@@ -62,17 +64,11 @@ export function CitizenProfile() {
 
 
     const getProperties = () => {
-        Axios.post('http://localhost:3001/properties', {
-            propertyowner: userid,
-        }).then((response) => {
-            if (response.data.message){
-                setPropertyStatus(response.data.message);
-                console.log(propertyStatus);
-            } else {
-                setPropertyList(response.data);
+        Axios.get('http://localhost:3001/properties', { withCredentials: true }).then((response) => {
+            if (response.data.success) {
+                setPropertyList(response.data.properties);
                 console.log(response);
             }
-          
         });
     }
 

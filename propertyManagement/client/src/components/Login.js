@@ -22,32 +22,35 @@ function Login() {
         Axios.post('http://localhost:3001/login', {
             username: usernameLogin,
             password: passwordLogin,
+        },
+        {
+            withCredentials: true,
         }).then((response) => {
             if (response.data.message) {
                 setLoginStatusL(response.data.message);
             } else {
                 console.log(response);
                 /*console.log(response.data[0].category);*/
-                var zuserid = String(response.data[0].userid);
+                var zuserid = String(response.data.user.userid);
                 localStorage.setItem("userid", zuserid);
-                var zusername = String(response.data[0].username);
+                var zusername = String(response.data.user.username);
                 localStorage.setItem("username", zusername);
-                var zcategory = String(response.data[0].category);
+                var zcategory = String(response.data.user.category);
                 localStorage.setItem("category", zcategory);
-                var zname = String(response.data[0].name);
+                var zname = String(response.data.user.name);
                 localStorage.setItem("name", zname);
-                var zlastname = String(response.data[0].lastname);
+                var zlastname = String(response.data.user.lastname);
                 localStorage.setItem("lastname", zlastname);
-                var zemail = String(response.data[0].email);
+                var zemail = String(response.data.user.email);
                 localStorage.setItem("email", zemail);
-                var zphone = String(response.data[0].phone);
+                var zphone = String(response.data.user.phone);
                 localStorage.setItem("phone", zphone);
                 
-                if (zcategory == "Citizen") {
+                if (zcategory == "1") {
                     window.location.href = '/citizenprofile';
-                } else if (zcategory == "Government") {
+                } else if (zcategory == "2") {
                     window.location.href = '/governmentprofile';
-                } else {
+                } else if (zcategory == "4") {
                     window.location.href = '/superuserprofile';
                 }
                 
