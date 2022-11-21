@@ -15,52 +15,6 @@ function CreateAccount() {
 
     const [loginStatus, setLoginStatus] = useState("")
 
-    const validateUser=userData => {
-        const errors={};
-        if(!userData.name){
-            errors.name="Please Enter your First Name";
-        } else if(userData.name.legnth > 20){
-            errors.name="Your first name should not exceed 20 characters";
-        }
-        if(!userData.lastname){
-            errors.lastname="Please Enter your Last Name";
-        } else if(userData.lastname.legnth > 20){
-            errors.lastname="Your last name should not exceed 20 characters";
-        }
-
-        if(!userData.username){
-            errors.username="Please Enter a username";
-        } else if(userData.username.length > 20){
-            errors.username="Your username should not exceed 20 characters";
-        }
-
-        if(!userData.password){
-            errors.username="Please Enter a password";
-        } else if(userData.password.length < 8){
-            errors.username="Your password needs to be at least 8 characters";
-        }
-
-        if (!userData.email) {
-            errors.email = "Please enter your email";
-          } else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(userData.email)) {
-            errors.email = 'Invalid email address';
-          }
-        
-        if (!userData.phone) {
-        errors.phone = "Please enter your phone number";
-        } else if (!/^(\d{2})? \d{10}$/i.test(userData.phone)) {
-        errors.phone = 'Invalid phone number';
-        }
-        
-        if (errors.length == 0){
-            register(); 
-        }
-
-        else{
-            console.log(errors); 
-            return errors; 
-        }
-    }
 
     const register = () => {
         Axios.post('http://localhost:3001/register', {
@@ -80,6 +34,67 @@ function CreateAccount() {
             console.log(response.data);
         });
     };
+
+    const validateUser= () => {
+        const errors={};
+        var valid = true; 
+        if(!nameCreate){
+            errors.name="Please Enter your First Name";
+            valid = false; 
+        } else if(nameCreate.length > 20){
+            errors.name="Your first name should not exceed 20 characters";
+            valid = false; 
+        }
+        if(!lastnameCreate){
+            errors.lastname="Please Enter your Last Name";
+            valid = false;
+        } else if(lastnameCreate.length > 20){
+            errors.lastname="Your last name should not exceed 20 characters";
+            valid = false; 
+        }
+
+        if(!usernameCreate){
+            errors.username="Please Enter a username";
+            valid = false;
+        } else if(usernameCreate.length > 20){
+            errors.username="Your username should not exceed 20 characters";
+            valid = false;
+        }
+
+        if(!passwordCreate){
+            errors.password="Please Enter a password";
+            valid = false;
+        } else if(passwordCreate.length < 4){
+            errors.password="Your password needs to be at least 4 characters";
+            valid = false;
+        }
+
+        if (!emailCreate) {
+            errors.email = "Please enter your email";
+            valid = false;
+          } else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(emailCreate)) {
+            errors.email = 'email must be in format: name@example.com';
+            valid = false;
+          }
+          
+        
+        if (!phoneCreate) {
+            valid = false;
+            errors.phone = "Please enter your phone number";
+        } else if (!/^\(([0-9]{3})\)?[-.●]([0-9]{3})[-.●]([0-9]{4})$/i.test(phoneCreate)) {
+            errors.phone = 'phone number must be in format: (xxx)-xxx-xxxx';
+            valid = false;
+        }
+        
+        if (valid == false) {
+            console.log(errors); 
+            return errors; 
+        }
+        else{
+            register();
+            return true;
+        }
+    }
 
     return (
         <div className="App">
@@ -146,11 +161,9 @@ function CreateAccount() {
                     }}
                 />
                 
-            </div>
-            <h4 id="phoneinput">Must be in format: (XXX) XXX-XXXX</h4>
-            
+            </div>            
             <h2>{loginStatus}</h2>
-            <button onClick={validateUser}>Register</button>
+            <button onClick={(e) => {validateUser()}}>Register</button>
             </div>
         </div>
     );

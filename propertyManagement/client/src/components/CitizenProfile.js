@@ -35,6 +35,54 @@ export function CitizenProfile() {
 
     const [propertyList, setPropertyList] = useState([]);
 
+    const isnumber = /\d/;
+    const isletter = /[a-zA-Z]/; 
+    const errors = {}; 
+
+    //check is number and their legnths
+    function validatePropertyName(){
+        if(!propertyname){
+            errors.propertyname = "Please enter a property name";
+            return false;
+        }else if(propertyname.length > 20){
+            errors.propertyname = "Name must be less than 20 characters"; 
+            return false; 
+        }else if(isnumber.test(propertyname)){
+            errors.propertyname = "Name must not contain numbers"; 
+            return false; 
+        }
+        return true;  
+    }
+
+    function validateNewName(){
+        if(!newName){
+            errors.newName = "Please enter a new name";
+            console.log(errors);
+            return false;
+        }else if(newName.length > 20){
+            errors.newName = "Name must be less than 20 characters"; 
+            console.log(errors);
+            return false; 
+        }else if(isnumber.test(propertyname)){
+            errors.newName = "Name must not contain numbers"; 
+            console.log(errors);
+            return false; 
+        }
+        return true;
+
+    }
+
+
+    const validateData= () => {
+        if(validatePropertyName()){
+            return true 
+        }
+        
+        else{
+            return false; 
+        }
+    }
+
     const addProperty = () => {
         Axios.post('http://localhost:3001/create', {
             propertyname: propertyname,
@@ -198,7 +246,11 @@ export function CitizenProfile() {
                     </select>
                 </div>
 
-                <button onClick={addProperty}>Add Property</button>
+                <button onClick={() => {
+                    if(validateData() == true){
+                        addProperty();
+                    }else{console.log(errors);
+                    }}}>Add Property</button>
 
             </div>
             <div className="properties">
@@ -222,7 +274,12 @@ export function CitizenProfile() {
                                 setNewName(event.target.value);
                             }} 
                         />
-                        <button onClick={()=>{updatePropertyName(val.propertyid)}}>Update Name</button>
+                        <button onClick={()=>{
+                            if(validateNewName() == true){
+                                updatePropertyName(val.propertyid)
+                            }else{
+                                validateNewName(); 
+                            }}}>Update Name</button>
                         <button onClick={()=>{deleteProperty(val.propertyid)}}>Delete Property</button>
                         </div>
                     </div>

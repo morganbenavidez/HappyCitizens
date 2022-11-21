@@ -34,6 +34,7 @@ function GovernmentProfile() {
     const [newName, setNewName] = useState(0);
 
     const [propertyList, setPropertyList] = useState([]);
+    
 
     const addProperty = () => {
         Axios.post('http://localhost:3001/create', {
