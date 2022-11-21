@@ -222,8 +222,6 @@ function GovernmentProfile() {
                                 setNewName(event.target.value);
                             }} 
                         />
-                        <button onClick={()=>{updatePropertyName(val.propertyid)}}>Update Name</button>
-                        <button onClick={()=>{deleteProperty(val.propertyid)}}>Delete Property</button>
                         </div>
                     </div>
                     )
