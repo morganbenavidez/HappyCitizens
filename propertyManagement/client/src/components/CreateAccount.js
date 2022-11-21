@@ -30,13 +30,13 @@ function CreateAccount() {
 
         if(!userData.username){
             errors.username="Please Enter a username";
-        } else if(userData.username.legnth > 20){
+        } else if(userData.username.length > 20){
             errors.username="Your username should not exceed 20 characters";
         }
 
         if(!userData.password){
             errors.username="Please Enter a password";
-        } else if(userData.password.legnth < 8){
+        } else if(userData.password.length < 8){
             errors.username="Your password needs to be at least 8 characters";
         }
 
@@ -52,11 +52,12 @@ function CreateAccount() {
         errors.phone = 'Invalid phone number';
         }
         
-        if (errors.legnth == 0){
+        if (errors.length == 0){
             register(); 
         }
 
         else{
+            console.log(errors); 
             return errors; 
         }
     }
@@ -149,7 +150,7 @@ function CreateAccount() {
             <h4 id="phoneinput">Must be in format: (XXX) XXX-XXXX</h4>
             
             <h2>{loginStatus}</h2>
-            <button onClick={register}>Register</button>
+            <button onClick={validateUser}>Register</button>
             </div>
         </div>
     );
