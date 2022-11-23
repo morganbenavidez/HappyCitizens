@@ -1,3 +1,5 @@
+
+
 import Axios from "axios";
 import React from "react";
 import { responsivePropType } from "react-bootstrap/esm/createUtilityClasses";
@@ -33,19 +35,6 @@ export function SuperUser() {
     const [newName, setNewName] = useState(0);
 
     const [propertyList, setPropertyList] = useState([]);
-    
-    const validateData= () => {
-        const errors={};
-        var valid = true; 
-        
-        if (valid == false) {
-            console.log(errors); 
-            return errors; 
-        }
-        else{
-            return true;
-        }
-    }
 
     const addProperty = () => {
         Axios.post('http://localhost:3001/create', {
@@ -210,11 +199,7 @@ export function SuperUser() {
                     </select>
                 </div>
 
-                <button onClick={() => {
-                    if(validateData() == true){
-                        addProperty();
-                    }else{validateData();
-                    }}}>Add Property</button>
+                <button onClick={addProperty}>Add Property</button>
 
             </div>
             <div className="properties">
@@ -238,12 +223,7 @@ export function SuperUser() {
                                 setNewName(event.target.value);
                             }} 
                         />
-                        <button onClick={()=>{
-                            if(validateData() == true){
-                                updatePropertyName(val.propertyid)
-                            }else{
-                                validateData(); 
-                            }}}>Update Name</button>
+                        <button onClick={()=>{updatePropertyName(val.propertyid)}}>Update Name</button>
                         <button onClick={()=>{deleteProperty(val.propertyid)}}>Delete Property</button>
                         </div>
                     </div>
