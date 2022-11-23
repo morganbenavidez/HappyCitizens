@@ -94,6 +94,11 @@ export function CitizenProfile() {
         });
     }
 
+    const grantAccess = (id) => {
+        Axios.get('http://localhost:3001/grant/${id}') 
+    }
+    
+
 
     return (
         <div className="App">
@@ -200,9 +205,17 @@ export function CitizenProfile() {
 
                 <button onClick={addProperty}>Add Property</button>
 
+                <div className="givemesomeroomtobreathe">
+                    <input
+                        type='number'
+                        placeholder='Username to Grant Access To'
+                        />
+                        <button onClick={grantAccess}>Grant</button>
+                </div>
+                
+                <button onClick={getProperties}>Show Properties</button>
             </div>
             <div className="properties">
-                <button onClick={getProperties}>Show Properties</button>
                 {propertyList.map((val, key) => {
                     return (
                     <div className="propertyName">
@@ -211,7 +224,7 @@ export function CitizenProfile() {
                             <h3>City: {val.city}</h3>
                             <h3>State: {val.state}</h3>
                             <h3>Purchase Price: {val.purchaseprice}</h3>
-                            <h3>Category: {val.propertycategory}</h3>
+                            <h3>Category: {val.category}</h3>
                         </div>
                         <div>
                         {" "}
