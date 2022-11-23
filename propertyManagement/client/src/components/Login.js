@@ -76,7 +76,7 @@ function Login() {
                         setUsernameLogin(e.target.value);
                     }}/>
                 <input 
-                    type='text' 
+                    type='password' 
                     placeholder='password' 
                     onChange={(e) => { 
                         setPasswordLogin(e.target.value);

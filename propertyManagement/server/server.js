@@ -15,8 +15,8 @@ const MySQLStore = require("connect-mysql")(session);
 const SQL_CONFIG = {
     user: 'root',
     host: 'localhost',
-    password: '123456789',
-    database: 'happycitizens'
+    password: '',
+    database: 'happyc'
 };
 
 const WHITELIST = ["http://localhost:3000",];
@@ -238,9 +238,22 @@ app.get('/properties', ensureLoggedIn, (req, res) => {
     });
 });
 
+/*Get All User Properties for Government/Super User page */
+
+app.get('/allproperties' , ensureLoggedIn, (req,res) => {
+    db.query("SELECT * FROM property", (err, result) => {
+        if (err) {
+            console.log(err);
+            return res.send({success: false});
+        }
+        res.send({success: true, properties: result});
+    });
+});
+
+
 
 app.put('/update', ensureLoggedIn, (req, res) => {
-    const propertyid = req.body.propertyid;
+    const propertyid = req.body.id;
     const propertyname = req.body.propertyname;
     console.log(propertyid);
     db.query("UPDATE property SET propertyname = ? WHERE propertyid = ? AND propertyowner = ?",
@@ -255,9 +268,37 @@ app.put('/update', ensureLoggedIn, (req, res) => {
 });
 
 
+/*
+app.put('update', (req,res) => {
+    const id = req.body.id;
+    const propertyname = req.body.propertyname
+    db.query("UPDATE SET property propertyname = ? WHERE id = ?", [propertyname, id], (err, result) => {
+    if (err) {
+        console.log(err)
+    } else {
+        res.send(result)
+    }
+    })
+})
+*/
+
+/* new delete function
 app.delete('/delete/:id', ensureLoggedIn, (req, res) => {
     const id = req.params.id
     db.query("DELETE FROM property WHERE propertyid = ? AND propertyowner = ?", [id, req.user.id], (err, result) => {
+        if (err) {
+            console.log(err);
+        } else {
+            res.send(result);
+        }
+    });
+})
+*/
+
+/* delete function testing */
+app.delete('/delete/:id', (req, res) => {
+    const id = req.params.id
+    db.query("DELETE FROM property WHERE propertyid = ?", id, (err, result) => {
         if (err) {
             console.log(err);
         } else {
