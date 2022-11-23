@@ -12,6 +12,7 @@ export function CitizenProfile() {
     var lastname = localStorage.getItem("lastname");
     var email = localStorage.getItem("email");
     var phone = localStorage.getItem("phone");
+    
     /*
     console.log(userid);
     console.log(username);
@@ -276,7 +277,7 @@ export function CitizenProfile() {
                             <h3>City: {val.city}</h3>
                             <h3>State: {val.state}</h3>
                             <h3>Purchase Price: {val.purchaseprice}</h3>
-                            <h3>Category: {val.category}</h3>
+                            <h3>Category: {val.propertycategory}</h3>
                         </div>
                         <div>
                         {" "}

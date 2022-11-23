@@ -12,6 +12,7 @@ function CreateAccount() {
     const [emailCreate, setEmailCreate] = useState("");
     const [phoneCreate, setPhoneCreate] = useState("");
     const [categoryCreate, setCategoryCreate] = useState("");
+    const errors = {};
 
     const [loginStatus, setLoginStatus] = useState("")
 
@@ -35,8 +36,8 @@ function CreateAccount() {
         });
     };
 
-    const validateUser= () => {
-        const errors={};
+
+    function validateUser(){
         var valid = true; 
         if(!nameCreate){
             errors.name="Please Enter your First Name";
@@ -94,6 +95,7 @@ function CreateAccount() {
             register();
             return true;
         }
+
     }
 
     return (
@@ -164,6 +166,9 @@ function CreateAccount() {
             </div>            
             <h2>{loginStatus}</h2>
             <button onClick={(e) => {validateUser()}}>Register</button>
+            <div>
+               
+            </div>
             </div>
         </div>
     );
