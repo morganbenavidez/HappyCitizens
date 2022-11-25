@@ -13,6 +13,7 @@ import CreateAccount from "./components/CreateAccount";
 import CitizenProfile from './components/CitizenProfile';
 import GovernmentProfile from './components/GovernmentProfile';
 import SuperUser from './components/SuperUser';
+import CreateAccountForm from './components/CreateAccountForm';
 
 
 function App() {
@@ -44,7 +45,7 @@ function App() {
 
       <Routes>
         <Route path="/login" element={<Login/>} />
-        <Route path="/register" element={<CreateAccount/>} />  
+        <Route path="/register" element={<CreateAccountForm/>} />  
         <Route path="/citizenprofile" element={<CitizenProfile/>} /> 
         <Route path="/governmentprofile" element={<GovernmentProfile/>} /> 
         <Route path="/superuserprofile" element={<SuperUser/>} />     

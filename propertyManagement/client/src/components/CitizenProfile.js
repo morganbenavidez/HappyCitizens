@@ -2,6 +2,8 @@ import Axios from "axios";
 import React from "react";
 import { responsivePropType } from "react-bootstrap/esm/createUtilityClasses";
 import { useState } from "react";
+import "./../Form.css";
+import "./../FormInput.css";
 
 export function CitizenProfile() {
 
@@ -13,98 +15,40 @@ export function CitizenProfile() {
     var email = localStorage.getItem("email");
     var phone = localStorage.getItem("phone");
     
-    /*
-    console.log(userid);
-    console.log(username);
-    console.log(category);
-    console.log(name);
-    console.log(lastname);
-    console.log(email);
-    console.log(phone);
-    */
 
-    const [propertyname, setPropertyName] = useState('');
-    const [propertyowner, setPropertyOwner] = useState('');
-    const [city, setCity] = useState('');
-    const [state, setState] = useState('');
-    const [purchaseprice, setPurchasePrice] = useState('');
-    const [propertycategory, setPropertyCategory] = useState('');
+    const [values, setValues] = useState({
+        propertyname:"",
+        propertyowner:"",
+        city:"",
+        state:"",
+        purchaseprice:"",
+        propertycategory:"",
+        propertyList:[],
+        newName:0
+    })
 
-    const [propertyStatus, setPropertyStatus] = useState('');
-
-    const [newName, setNewName] = useState(0);
-
-    const [propertyList, setPropertyList] = useState([]);
-
-    const isnumber = /\d/;
-    const isletter = /[a-zA-Z]/; 
-    const errors = {}; 
-
-    //check is number and their legnths
-    function validatePropertyName(){
-        if(!propertyname){
-            errors.propertyname = "Please enter a property name";
-            return false;
-        }else if(propertyname.length > 20){
-            errors.propertyname = "Name must be less than 20 characters"; 
-            return false; 
-        }else if(isnumber.test(propertyname)){
-            errors.propertyname = "Name must not contain numbers"; 
-            return false; 
-        }
-        return true;  
-    }
-
-    function validateNewName(){
-        if(!newName){
-            errors.newName = "Please enter a new name";
-            console.log(errors);
-            return false;
-        }else if(newName.length > 20){
-            errors.newName = "Name must be less than 20 characters"; 
-            console.log(errors);
-            return false; 
-        }else if(isnumber.test(propertyname)){
-            errors.newName = "Name must not contain numbers"; 
-            console.log(errors);
-            return false; 
-        }
-        return true;
-
-    }
-
-
-    const validateData= () => {
-        if(validatePropertyName()){
-            return true 
-        }
-        
-        else{
-            return false; 
-        }
-    }
 
     const addProperty = () => {
         Axios.post('http://localhost:3001/create', {
-            propertyname: propertyname,
+            propertyname: values.propertyname,
             propertyowner: userid,
-            city: city,
-            state: state,
-            purchaseprice:purchaseprice,
-            propertycategory: propertycategory,
+            city: values.city,
+            state: values.state,
+            purchaseprice: values.purchaseprice,
+            propertycategory: values.propertycategory,
         }, {
             withCredentials: true
         }).then(() => {
             console.log("successful");
-            setPropertyList([
-                ...propertyList,
+            setValues.propertyList([
+                ...values.propertyList,
                 {
-                    propertyname: propertyname,
+                    propertyname: values.propertyname,
                     propertyowner: userid,
-                    city: city,
-                    state: state,
-                    purchaseprice:purchaseprice,
-                    propertycategory: propertycategory,
+                    city: values.city,
+                    state: values.state,
+                    purchaseprice: values.purchaseprice,
+                    propertycategory: values.propertycategory,
                 },
             ])
         });
@@ -115,7 +59,7 @@ export function CitizenProfile() {
     const getProperties = () => {
         Axios.get('http://localhost:3001/properties', { withCredentials: true }).then((response) => {
             if (response.data.success) {
-                setPropertyList(response.data.properties);
+                setValues.propertyList(response.data.properties);
                 console.log(response);
             }
         });
@@ -124,11 +68,11 @@ export function CitizenProfile() {
 
     const updatePropertyName = (id) => {
         Axios.put('http://localhost:3001/update', {
-          propertyname: newName, 
+          propertyname: values.newName, 
           propertyid: id,
         }).then((response) => {
-          setPropertyList(propertyList.map((val) => {
-            return val.propertyid == id ? {propertyid: val.propertyid, propertyname: newName, 
+          setValues.propertyList(values.propertyList.map((val) => {
+            return val.propertyid == id ? {propertyid: val.propertyid, propertyname: values.newName, 
               propertyowner: userid, city: val.city, state: val.state, 
               purchaseprice: val.purchaseprice, propertycategory: val.propertycategory} :val
           }))
@@ -137,7 +81,7 @@ export function CitizenProfile() {
 
     const deleteProperty = (id) => {
         Axios.delete(`http://localhost:3001/delete/${id}`).then((response)=> {
-          setPropertyList(propertyList.filter((val)=> {
+            setValues.propertyList(values.propertyList.filter((val)=> {
             return val.propertyid != id
           }))
         });
@@ -152,29 +96,33 @@ export function CitizenProfile() {
     return (
         <div className="App">
             <div className="information">
-                <div className="givemesomeroomtobreathe">
-                    <h2>{name} {lastname} - Citizen Profile</h2>
-                </div>
-                <div className="givemesomeroomtobreathe">
-                    <input
-                        type='text'
-                        placeholder='Name your Property'
+
+                <form class = "formInput">
+                    <h3>{name} {lastname} - Citizen Profile</h3>
+                    <h3>Add a property</h3>
+                    <label>
+                        Property Name
+                        <input 
+                        type="text"
+                        placeholder="Property Name" 
                         onChange={(event) => {
-                            setPropertyName(event.target.value)
+                            setValues.propertyName(event.target.value)
                         }}
-                    />
-                </div>
-                <div className="givemesomeroomtobreathe">
-                    <input
+                        required="true"/>
+                    </label>
+                    <label>
+                        City
+                        <input 
                         type='text'
                         placeholder='City'
                         onChange={(event) => {
-                            setCity(event.target.value)
+                            setValues.city(event.target.value)
                         }}
-                    />
-                </div>
-                <div className="givemesomeroomtobreathe">
-                    <select onChange={(e) => {setState(e.target.value);}}>
+                        required="true"/>
+                    </label>
+                    <label>
+                        State
+                        <select required="true" onChange={(e) => {setValues.state(e.target.value);}}>
                         <option value="h" disabled selected hidden>State</option>
                         <option value="AL">AL</option>
                         <option value="AK">AK</option>
@@ -227,75 +175,79 @@ export function CitizenProfile() {
                         <option value="WV">WV</option>
                         <option value="WI">WI</option>
                         <option value="WY">WY</option>
-
                     </select>
-                </div>
-                <div className="givemesomeroomtobreathe">
-                    <input 
+                    </label>
+                    <label>
+                        Purchase Price
+                        <input 
                         type='number'
                         placeholder='Purchase Price'
                         onChange={(event) => {
-                            setPurchasePrice(event.target.value)}} 
-                    />
-                </div>
-                <div className="givemesomeroomtobreathe">
-                    <select onChange={(e) => {setPropertyCategory(e.target.value);}}>
-                        <option value="h" disabled selected hidden>Property category</option>
-                        <option value="Land">Land</option>
-                        <option value="Structure">Structure</option>
-                        <option value="Electronics">Electronics</option>
-                        <option value="Jewelry">Jewelry</option>
-                        <option value="Single-Family Home">Single-Family Home</option>
-                        <option value="Multi-Family Home">Multi-Family Home</option>
-                        <option value="Vehicle">Vehicle</option>
-                        <option value="Boat">Boat</option>
-                    </select>
-                </div>
+                            setValues.purchaseprice(event.target.value)}} 
+                        required="true"/>
+                    </label>
+                    <label>
+                        Category
+                        <select required="true" onChange={(e) => {setValues.propertycategory(e.target.value);}}>
+                            <option value="h" disabled selected hidden>Property category</option>
+                            <option value="Land">Land</option>
+                            <option value="Structure">Structure</option>
+                            <option value="Electronics">Electronics</option>
+                            <option value="Jewelry">Jewelry</option>
+                            <option value="Single-Family Home">Single-Family Home</option>
+                            <option value="Multi-Family Home">Multi-Family Home</option>
+                            <option value="Vehicle">Vehicle</option>
+                            <option value="Boat">Boat</option>
+                        </select>
+                    </label>
+                    <button onClick={addProperty()}>Add Property</button>
+                </form>
 
-                <button onClick={() => {
-                    if(validateData() == true){
-                        addProperty();
-                    }else{console.log(errors);
-                    }}}>Add Property</button>
-
-                <div className="givemesomeroomtobreathe">
+                <div class="lookatproperties">
                     <input
-                        type='number'
-                        placeholder='Username to Grant Access To'
-                        />
-                        <button onClick={grantAccess}>Grant</button>
+                            type='number'
+                            placeholder='Username to Grant Access To'
+                            />
+                    <button onClick={grantAccess}>Grant</button>
+                    <button onClick={getProperties}>Show Properties</button>
                 </div>
+
                 
-                <button onClick={getProperties}>Show Properties</button>
             </div>
             <div className="properties">
-                {propertyList.map((val, key) => {
+                {values.propertyList.map((val, key) => {
                     return (
                     <div className="propertyName">
-                        <div>
-                            <h3>Property Name: {val.propertyname}</h3>
-                            <h3>City: {val.city}</h3>
-                            <h3>State: {val.state}</h3>
-                            <h3>Purchase Price: {val.purchaseprice}</h3>
-                            <h3>Category: {val.propertycategory}</h3>
-                        </div>
-                        <div>
-                        {" "}
-                        <input 
-                            type="text" 
-                            placeholder="New Name" 
-                            onChange={(event) => {
-                                setNewName(event.target.value);
-                            }} 
-                        />
-                        <button onClick={()=>{
-                            if(validateNewName() == true){
-                                updatePropertyName(val.propertyid)
-                            }else{
-                                validateNewName(); 
-                            }}}>Update Name</button>
-                        <button onClick={()=>{deleteProperty(val.propertyid)}}>Delete Property</button>
-                        </div>
+                        <table>
+                            <tr>
+                                <th>Property Name</th>
+                                <th>City</th>
+                                <th>State</th>
+                                <th>Purchase Price</th>
+                                <th>Category</th>
+                                <th>Update Property Name</th>
+                                <th>Update</th>
+                                <th>Delete</th>
+                            </tr>
+                            <tr>
+                                <td>{val.propertyname}</td>
+                                <td>{val.city}</td>
+                                <td>{val.state}</td>
+                                <td>{val.purchaseprice}</td>
+                                <td>{val.propertycategory}</td>
+                                <td><input 
+                                    type="text" 
+                                    placeholder="New Name" 
+                                    onChange={(event) => {
+                                        setValues.newName(event.target.value);
+                                    }} 
+                                />
+                                </td>
+                                <td><button onClick={updatePropertyName(val.propertyid)}>Update Name</button></td>
+                                <td><button onClick={()=>{deleteProperty(val.propertyid)}}>Delete Property</button></td>
+                            </tr>
+                        </table>
+                    
                     </div>
                     )
                 })}

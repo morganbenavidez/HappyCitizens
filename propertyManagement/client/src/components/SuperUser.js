@@ -60,25 +60,35 @@ export function SuperUser() {
                 {propertyList.map((val, key) => {
                     return (
                     <div className="propertyName">
-                        <div>
-                            <h3>Property Name: {val.propertyname}</h3>
-                            <h3>City: {val.city}</h3>
-                            <h3>State: {val.state}</h3>
-                            <h3>Purchase Price: {val.purchaseprice}</h3>
-                            <h3>Category: {val.propertycategory}</h3>
-                        </div>
-                        <div>
-                        {" "}
-                        <input 
-                            type="text" 
-                            placeholder="New Name" 
-                            onChange={(event) => {
-                                setNewName(event.target.value);
-                            }} 
-                        />
-                        <button onClick={()=>{updatePropertyName(val.propertyid)}}>Update Name</button>
-                        <button onClick={()=>{deleteProperty(val.propertyid)}}>Delete Property</button>
-                        </div>
+                        <table>
+                            <tr>
+                                <th>Property Name</th>
+                                <th>City</th>
+                                <th>State</th>
+                                <th>Purchase Price</th>
+                                <th>Category</th>
+                                <th>Update Property Name</th>
+                                <th>Update</th>
+                                <th>Delete</th>
+                            </tr>
+                            <tr>
+                                <td>{val.propertyname}</td>
+                                <td>{val.city}</td>
+                                <td>{val.state}</td>
+                                <td>{val.purchaseprice}</td>
+                                <td>{val.propertycategory}</td>
+                                <td><input 
+                                    type="text" 
+                                    placeholder="New Name" 
+                                    onChange={(event) => {
+                                        setNewName(event.target.value);
+                                    }} 
+                                />
+                                </td>
+                                <td><button class="editbutton" onClick={()=>{updatePropertyName(val.propertyid)}}>Update Name</button></td>
+                                <td><button class="editbutton" onClick={()=>{deleteProperty(val.propertyid)}}>Delete Property</button></td>
+                            </tr>
+                        </table>
                     </div>
                     )
                 })}
