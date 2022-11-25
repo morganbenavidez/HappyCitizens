@@ -46,6 +46,7 @@ function App() {
       <Routes>
         <Route path="/login" element={<Login/>} />
         <Route path="/register" element={<CreateAccountForm/>} />  
+        <Route path="/" element={<CreateAccountForm/>} />  
         <Route path="/citizenprofile" element={<CitizenProfile/>} /> 
         <Route path="/governmentprofile" element={<GovernmentProfile/>} /> 
         <Route path="/superuserprofile" element={<SuperUser/>} />     
