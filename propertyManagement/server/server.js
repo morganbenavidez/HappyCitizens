@@ -16,7 +16,7 @@ const SQL_CONFIG = {
     user: 'root',
     host: 'localhost',
     password: '',
-    database: 'happycitizens'
+    database: 'happyc'
 };
 
 const WHITELIST = ["http://localhost:3000",];
@@ -267,12 +267,12 @@ app.get('/properties', ensureLoggedIn, (req, res) => {
 });
 
 
-app.put('/update', ensureLoggedIn, (req, res) => {
+app.put('/update', (req, res) => {
     const propertyid = req.body.id;
     const propertyname = req.body.propertyname;
     console.log(propertyid);
-    db.query("UPDATE property SET propertyname = ? WHERE propertyid = ? AND propertyowner = ?",
-    [propertyname, propertyid, req.user.id],
+    db.query("UPDATE property SET propertyname = ? WHERE propertyid = ?",
+    [propertyname, propertyid],
     (err, result) => {
         if (err) {
             console.log(err);
@@ -283,9 +283,9 @@ app.put('/update', ensureLoggedIn, (req, res) => {
 });
 
 
-app.delete('/delete/:id', ensureLoggedIn, (req, res) => {
+app.delete('/delete/:id', (req, res) => {
     const id = req.params.id
-    db.query("DELETE FROM property WHERE propertyid = ? AND propertyowner = ?", [id, req.user.id], (err, result) => {
+    db.query("DELETE FROM property WHERE propertyid = ?", id, (err, result) => {
         if (err) {
             console.log(err);
         } else {
