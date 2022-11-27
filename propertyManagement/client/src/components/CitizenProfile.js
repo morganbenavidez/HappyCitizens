@@ -7,6 +7,9 @@ import "./../FormInput.css";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Button from 'react-bootstrap/Button';
 import Table from 'react-bootstrap/Table';
+import jsPDF from 'jspdf';
+import * as htmlToImage from 'html-to-image';
+import { toPng, toJpeg, toBlob, toPixelData, toSvg } from 'html-to-image';
 
 
 
@@ -107,13 +110,33 @@ export function CitizenProfile() {
     const grantAccess = (id) => {
         Axios.get('http://localhost:3001/grant/${id}') 
     }
+
+    const exportPdf = () => {
+
+        htmlToImage.toPng(document.getElementById('myPage'), { quality: 0.95 })
+        .then(function (dataUrl) {
+          var link = document.createElement('a');
+          link.download = 'my-image-name.jpeg';
+          const pdf = new jsPDF();
+          const imgProps= pdf.getImageProperties(dataUrl);
+          const pdfWidth = pdf.internal.pageSize.getWidth();
+          const pdfHeight = (imgProps.height * pdfWidth) / imgProps.width;
+          pdf.addImage(dataUrl, 'PNG', 0, 0,pdfWidth, pdfHeight);
+          pdf.save("propertiesPage.pdf"); 
+        });
+   
+    }
+
     
 
 
     return (
-        <div className="containter-fluid">
+        <div id="myPage" className="containter-fluid">
             <div className="App">
                 <div className="information">
+                    <button id ="export" onClick={() => window.print()}>Print</button>
+                    <button id="export" onClick={exportPdf}>Download PDF</button>
+
 
                     <form class = "formInput container-fluid">
                         <h3>{name} {lastname} - Citizen Profile</h3>

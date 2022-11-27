@@ -6,6 +6,9 @@ import { useState } from "react";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Button from 'react-bootstrap/Button';
 import Table from 'react-bootstrap/Table';
+import jsPDF from 'jspdf';
+import * as htmlToImage from 'html-to-image';
+import { toPng, toJpeg, toBlob, toPixelData, toSvg } from 'html-to-image';
 
 export function SuperUser() {
     
@@ -50,10 +53,30 @@ export function SuperUser() {
         });
     }
 
+    const exportPdf = () => {
+
+        htmlToImage.toPng(document.getElementById('myPage'), { quality: 0.95 })
+        .then(function (dataUrl) {
+          var link = document.createElement('a');
+          link.download = 'my-image-name.jpeg';
+          const pdf = new jsPDF();
+          const imgProps= pdf.getImageProperties(dataUrl);
+          const pdfWidth = pdf.internal.pageSize.getWidth();
+          const pdfHeight = (imgProps.height * pdfWidth) / imgProps.width;
+          pdf.addImage(dataUrl, 'PNG', 0, 0,pdfWidth, pdfHeight);
+          pdf.save("propertiesPage.pdf"); 
+        });
+   
+    }
+
 
     return (
-        <div className="App">
+        <div id="myPage" className="App">
             <div className="information">
+
+            <button id ="export" onClick={() => window.print()}>Print</button>
+                    <button id="export" onClick={exportPdf}>Download PDF</button>
+
                 <div className="givemesomeroomtobreathe">
                     <h2>{name} {lastname} - Super User</h2>
                 </div>
