@@ -31,6 +31,7 @@ export function CitizenProfile() {
     const [purchaseprice, setPurchasePrice] = useState('');
     const [propertycategory, setPropertyCategory] = useState('');
     const [propertyList, setPropertyList] = useState([]);
+    const [propertyPrices, setPropertyPrices] = useState([]);
 
     const [propertyStatus, setPropertyStatus] = useState('');
 
@@ -74,8 +75,13 @@ export function CitizenProfile() {
         });
     };
 
-
-
+    const netWorth = () => {
+        var sum = 0; 
+        propertyList.forEach(function (item, index) {
+            sum += item.purchaseprice})
+        return sum; 
+    }
+    
     const getProperties = () => {
         Axios.get('http://localhost:3001/properties', { withCredentials: true }).then((response) => {
             if (response.data.success) {
@@ -134,12 +140,13 @@ export function CitizenProfile() {
         <div id="myPage">
             <div className="App">
                 <div className="information">
+                    <p>Net Worth: ${netWorth()}</p>
+                    <h3>{name} {lastname} - Citizen Profile</h3>
                     <button id ="export" onClick={() => window.print()}>Print</button>
                     <button id="export" onClick={exportPdf}>Download PDF</button>
 
 
                     <form className = "formInput container-fluid">
-                        <h3>{name} {lastname} - Citizen Profile</h3>
                         <h3>Add a property</h3>
                         <label>
                             Property Name
@@ -242,13 +249,12 @@ export function CitizenProfile() {
                             </select>
                         </label>
                         <button onClick={validateData}>Add Property</button>
-                        <input
+                    </form>
+                    <input
                             type='number'
                             placeholder='Username to Grant Access To'
                             />
-                        <button onClick={grantAccess}>Grant</button>
-                        
-                    </form>
+                    <Button variant="dark" size="sm" onClick={grantAccess}>Grant</Button>
                     
                 
             <div>
