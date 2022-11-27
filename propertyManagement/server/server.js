@@ -255,6 +255,22 @@ app.get("/properties/:userid", ensureLoggedIn, (req, res) => {
     });
 });
 
+/* Get all properties */
+
+app.get("/allproperties", ensureLoggedIn, (req, res) => {
+    if (req.user.access != CATEGORY_SUPERUSER && req.user.access != CATEGORY_GOVERNMENT) {
+        return res.send({success: false, message: "No permissions"});
+    }
+
+    db.query("SELECT * FROM property", (err, result) => {
+        if (err) {
+            console.log(err);
+            return res.send({success: false});
+        }
+        res.send({success: true, properties: result});
+    });
+});
+
 app.get('/properties', ensureLoggedIn, (req, res) => {
     db.query("SELECT * FROM property WHERE propertyowner IN (SELECT userid FROM accountaccess WHERE granted = ?) OR propertyowner = ?",
     [req.user.id, req.user.id], (err, result) => {
@@ -267,12 +283,12 @@ app.get('/properties', ensureLoggedIn, (req, res) => {
 });
 
 
-app.put('/update', (req, res) => {
+app.put('/update', ensureLoggedIn, (req, res) => {
     const propertyid = req.body.id;
     const propertyname = req.body.propertyname;
     console.log(propertyid);
-    db.query("UPDATE property SET propertyname = ? WHERE propertyid = ?",
-    [propertyname, propertyid],
+    db.query("UPDATE property SET propertyname = ? WHERE propertyid = ? AND propertyowner = ?",
+    [propertyname, propertyid, req.user.id],
     (err, result) => {
         if (err) {
             console.log(err);
@@ -283,9 +299,9 @@ app.put('/update', (req, res) => {
 });
 
 
-app.delete('/delete/:id', (req, res) => {
+app.delete('/delete/:id', ensureLoggedIn, (req, res) => {
     const id = req.params.id
-    db.query("DELETE FROM property WHERE propertyid = ?", id, (err, result) => {
+    db.query("DELETE FROM property WHERE propertyid = ? AND propertyowner = ?", [id, req.user.id], (err, result) => {
         if (err) {
             console.log(err);
         } else {

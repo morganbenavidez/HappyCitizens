@@ -1,9 +1,12 @@
 
-
 import Axios from "axios";
 import React from "react";
 import { responsivePropType } from "react-bootstrap/esm/createUtilityClasses";
 import { useState } from "react";
+import 'bootstrap/dist/css/bootstrap.min.css';
+import Button from 'react-bootstrap/Button';
+import Table from 'react-bootstrap/Table';
+
 export function SuperUser() {
     
     var userid = localStorage.getItem("userid");
@@ -56,42 +59,47 @@ export function SuperUser() {
                 </div>
             </div>
             <div className="properties">
-                <button onClick={getProperties}>Show Properties</button>
-                {propertyList.map((val, key) => {
-                    return (
-                    <div className="propertyName">
-                        <table>
-                            <tr>
-                                <th>Property Name</th>
-                                <th>City</th>
-                                <th>State</th>
-                                <th>Purchase Price</th>
-                                <th>Category</th>
-                                <th>Update Property Name</th>
-                                <th>Update</th>
-                                <th>Delete</th>
-                            </tr>
-                            <tr>
-                                <td>{val.propertyname}</td>
-                                <td>{val.city}</td>
-                                <td>{val.state}</td>
-                                <td>{val.purchaseprice}</td>
-                                <td>{val.propertycategory}</td>
-                                <td><input 
-                                    type="text" 
-                                    placeholder="New Name" 
-                                    onChange={(event) => {
-                                        setNewName(event.target.value);
-                                    }} 
-                                />
-                                </td>
-                                <td><button class="editbutton" onClick={()=>{updatePropertyName(val.propertyid)}}>Update Name</button></td>
-                                <td><button class="editbutton" onClick={()=>{deleteProperty(val.propertyid)}}>Delete Property</button></td>
-                            </tr>
-                        </table>
-                    </div>
-                    )
-                })}
+            <Button variant="dark" size="sm" onClick={getProperties}>Show Properties</Button>
+                    {propertyList.map((val, key) => {
+                        return (
+                        
+                        <div>
+                            <Table responsive="md" striped bordered hover variant="dark">
+                                <thead>
+                                    <tr className="container-fluid">
+                                        <th className="col">Property Name</th>
+                                        <th className="col">City</th>
+                                        <th className="col">State</th>
+                                        <th className="col">Purchase Price</th>
+                                        <th className="col">Category</th>
+                                        <th className="col">Update Property Name</th>
+                                        <th className="col">Update</th>
+                                        <th className="col">Delete</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr className="container-fluid">
+                                        <td className="col">{val.propertyname}</td>
+                                        <td className="col">{val.city}</td>
+                                        <td className="col">{val.state}</td>
+                                        <td className="col">{val.purchaseprice}</td>
+                                        <td className="col">{val.category}</td>
+                                        <td className="col"><input 
+                                            type="text" 
+                                            placeholder="New Name" 
+                                            onChange={(event) => {
+                                                setNewName(event.target.value);
+                                            }} 
+                                        />
+                                        </td>
+                                        <td className="col"><button onClick={()=>{updatePropertyName(val.propertyid)}}>Update</button></td>
+                                        <td className="col"><button onClick={()=>{deleteProperty(val.propertyid)}}>Delete</button></td>
+                                    </tr>
+                                </tbody>
+                            </Table>
+                        </div>
+                        )
+                    })}
             
             </div>
         </div>
