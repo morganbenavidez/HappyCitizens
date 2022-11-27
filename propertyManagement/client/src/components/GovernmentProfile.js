@@ -38,6 +38,26 @@ function GovernmentProfile() {
         });
     }
 
+    const propertyCategoryName = (propertycategory) => {
+        if(propertycategory == 1){
+            return 'Land'
+        } else if(propertycategory == 2){
+            return 'Structure'
+        } else if(propertycategory == 3){
+            return 'Electronics'
+        } else if(propertycategory == 4){
+            return 'Jewlery'
+        } else if(propertycategory == 5){
+            return 'Single-Family Home'
+        } else if(propertycategory == 6){
+            return 'Multi-Family Home'
+        } else if(propertycategory == 7){
+            return 'Vehicle'
+        } else if(propertycategory == 8){
+            return 'Boat'
+        }
+    }
+
     const exportPdf = () => {
 
         htmlToImage.toPng(document.getElementById('myPage'), { quality: 0.95 })
@@ -84,7 +104,7 @@ function GovernmentProfile() {
                                                 <td>{val.city}</td>
                                                 <td>{val.state}</td>
                                                 <td>{val.purchaseprice}</td>
-                                                <td>{val.category}</td>
+                                                <td>{propertyCategoryName(val.category)}</td>
                                             </tr>
                                         </tbody>
                                     </Table>
