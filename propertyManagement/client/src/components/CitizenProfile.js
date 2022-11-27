@@ -213,7 +213,7 @@ export function CitizenProfile() {
                             <option value="Boat">Boat</option>
                         </select>
                     </label>
-                    <button onClick={validateData()}>Add Property</button>
+                    <button onClick={validateData}>Add Property</button>
                     <input
                         type='number'
                         placeholder='Username to Grant Access To'
@@ -245,7 +245,7 @@ export function CitizenProfile() {
                                 <td className="col">{val.city}</td>
                                 <td className="col">{val.state}</td>
                                 <td className="col">{val.purchaseprice}</td>
-                                <td className="col">{val.propertycategory}</td>
+                                <td className="col">{val.category}</td>
                                 <td className="col"><input 
                                     type="text" 
                                     placeholder="New Name" 
@@ -254,7 +254,7 @@ export function CitizenProfile() {
                                     }} 
                                 />
                                 </td>
-                                <td className="col"><button onClick={updatePropertyName(val.propertyid)}>Update Name</button></td>
+                                <td className="col"><button onClick={()=>{updatePropertyName(val.propertyid)}}>Update Name</button></td>
                                 <td className="col"><button onClick={()=>{deleteProperty(val.propertyid)}}>Delete Property</button></td>
                             </tr>
                         </table>
