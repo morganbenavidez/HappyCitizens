@@ -1,13 +1,11 @@
 import Axios from "axios";
 import React from "react";
-import { responsivePropType } from "react-bootstrap/esm/createUtilityClasses";
 import { useState } from "react";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Button from 'react-bootstrap/Button';
 import Table from 'react-bootstrap/Table';
 import jsPDF from 'jspdf';
 import * as htmlToImage from 'html-to-image';
-import { toPng, toJpeg, toBlob, toPixelData, toSvg } from 'html-to-image';
 
 
 function GovernmentProfile() {
@@ -57,48 +55,44 @@ function GovernmentProfile() {
     }
 
     return (
-        <div id="myPage" className="App">
+        <div id="myPage">
+            <div className="App">
             <div className="information">
-            <button id ="export" onClick={() => window.print()}>Print</button>
-                    <button id="export" onClick={exportPdf}>Download PDF</button>
-
-                <div className="givemesomeroomtobreathe">
-                    <h2>{name} {lastname} - Government Profile</h2>
+                <h3>{name} {lastname} - Government Profile</h3>
                 </div>
-            </div>
-        
-            <div className="properties">
-                <Button variant="dark" size="sm" onClick={getProperties}>Show Properties</Button>
-                {propertyList.map((val, key) => {
-                    return (
-                        <div>
-                            <Table responsive="md" striped bordered hover variant="dark">
-                                <thead>
-                                    <tr className="container-fluid">
-                                        <th className="col">Property Name</th>
-                                        <th className="col">City</th>
-                                        <th className="col">State</th>
-                                        <th className="col">Purchase Price</th>
-                                        <th className="col">Category</th>
-                                        <th className="col">Update Property Name</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr className="container-fluid">
-                                        <td className="col">{val.propertyname}</td>
-                                        <td className="col">{val.city}</td>
-                                        <td className="col">{val.state}</td>
-                                        <td className="col">{val.purchaseprice}</td>
-                                        <td className="col">{val.category}</td>
-                                    </tr>
-                                </tbody>
-                            </Table>
-                        </div>
-                        )
-                    })}
-            
-            </div>
-        </div>
+                    <div>
+                        <Button  variant="dark" onClick={() => window.print()}>Print</Button>
+                        <Button variant="dark" onClick={exportPdf}>Download PDF</Button>
+                        <Button variant="dark" onClick={getProperties}>Show Properties</Button>
+                    </div>
+                        {propertyList.map((val, key) => {
+                            return (
+                                <div>
+                                    <Table responsive="md" striped bordered hover variant="dark">
+                                        <thead>
+                                            <tr>
+                                                <th>Property Name</th>
+                                                <th>City</th>
+                                                <th>State</th>
+                                                <th>Purchase Price</th>
+                                                <th>Category</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td>{val.propertyname}</td>
+                                                <td>{val.city}</td>
+                                                <td>{val.state}</td>
+                                                <td>{val.purchaseprice}</td>
+                                                <td>{val.category}</td>
+                                            </tr>
+                                        </tbody>
+                                    </Table>
+                                </div>
+                                )
+                            })}
+                    </div>
+                </div>
     );
 }
 

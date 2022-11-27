@@ -9,7 +9,6 @@ import './App.css';
    Link
  } from "react-router-dom";
 import Login from "./components/Login";
-import CreateAccount from "./components/CreateAccount";
 import CitizenProfile from './components/CitizenProfile';
 import GovernmentProfile from './components/GovernmentProfile';
 import SuperUser from './components/SuperUser';

@@ -131,14 +131,14 @@ export function CitizenProfile() {
 
 
     return (
-        <div id="myPage" className="containter-fluid">
+        <div id="myPage">
             <div className="App">
                 <div className="information">
                     <button id ="export" onClick={() => window.print()}>Print</button>
                     <button id="export" onClick={exportPdf}>Download PDF</button>
 
 
-                    <form class = "formInput container-fluid">
+                    <form className = "formInput container-fluid">
                         <h3>{name} {lastname} - Citizen Profile</h3>
                         <h3>Add a property</h3>
                         <label>
@@ -259,25 +259,25 @@ export function CitizenProfile() {
                         <div>
                             <Table responsive="md" striped bordered hover variant="dark">
                                 <thead>
-                                    <tr className="container-fluid">
-                                        <th className="col">Property Name</th>
-                                        <th className="col">City</th>
-                                        <th className="col">State</th>
-                                        <th className="col">Purchase Price</th>
-                                        <th className="col">Category</th>
-                                        <th className="col">Update Property Name</th>
-                                        <th className="col">Update</th>
-                                        <th className="col">Delete</th>
+                                    <tr>
+                                        <th>Property Name</th>
+                                        <th>City</th>
+                                        <th>State</th>
+                                        <th>Purchase Price</th>
+                                        <th>Category</th>
+                                        <th>Update Property Name</th>
+                                        <th>Update</th>
+                                        <th>Delete</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr className="container-fluid">
-                                        <td className="col">{val.propertyname}</td>
-                                        <td className="col">{val.city}</td>
-                                        <td className="col">{val.state}</td>
-                                        <td className="col">{val.purchaseprice}</td>
-                                        <td className="col">{val.category}</td>
-                                        <td className="col"><input 
+                                    <tr>
+                                        <td>{val.propertyname}</td>
+                                        <td>{val.city}</td>
+                                        <td>{val.state}</td>
+                                        <td>{val.purchaseprice}</td>
+                                        <td>{val.category}</td>
+                                        <td><input 
                                             type="text" 
                                             placeholder="New Name" 
                                             onChange={(event) => {
@@ -285,8 +285,8 @@ export function CitizenProfile() {
                                             }} 
                                         />
                                         </td>
-                                        <td className="col"><button onClick={()=>{updatePropertyName(val.propertyid)}}>Update</button></td>
-                                        <td className="col"><button onClick={()=>{deleteProperty(val.propertyid)}}>Delete</button></td>
+                                        <td><button onClick={()=>{updatePropertyName(val.propertyid)}}>Update</button></td>
+                                        <td><button onClick={()=>{deleteProperty(val.propertyid)}}>Delete</button></td>
                                     </tr>
                                 </tbody>
                             </Table>
