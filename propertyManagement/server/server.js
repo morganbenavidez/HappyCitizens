@@ -284,7 +284,7 @@ app.get('/properties', ensureLoggedIn, (req, res) => {
 
 
 app.put('/update', ensureLoggedIn, (req, res) => {
-    const propertyid = req.body.id;
+    const propertyid = req.params.id;
     const propertyname = req.body.propertyname;
     console.log(propertyid);
     db.query("UPDATE property SET propertyname = ? WHERE propertyid = ? AND propertyowner = ?",
@@ -299,7 +299,7 @@ app.put('/update', ensureLoggedIn, (req, res) => {
 });
 
 
-app.delete('/delete/:id', ensureLoggedIn, (req, res) => {
+app.delete('/delete/:id',ensureLoggedIn, (req, res) => {
     const id = req.params.id
     db.query("DELETE FROM property WHERE propertyid = ? AND propertyowner = ?", [id, req.user.id], (err, result) => {
         if (err) {
