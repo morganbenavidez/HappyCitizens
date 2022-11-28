@@ -128,11 +128,8 @@ export function CitizenProfile() {
         });
     }
 
-    
-
-
     const updatePropertyName = (id) => {
-        Axios.put('http://localhost:3001/update', {
+        Axios.put(`http://localhost:3001/update/${id}`, {
           propertyname: newName, 
           propertyid: id,
         },{ withCredentials: true }).then((response) => {

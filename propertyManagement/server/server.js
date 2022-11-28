@@ -298,7 +298,7 @@ app.get('/properties', ensureLoggedIn, (req, res) => {
 });
 
 
-app.put('/update', ensureLoggedIn, (req, res) => {
+app.put('/update/:id', ensureLoggedIn, (req, res) => {
     const propertyid = req.params.id;
     const propertyname = req.body.propertyname;
     console.log(propertyid);
