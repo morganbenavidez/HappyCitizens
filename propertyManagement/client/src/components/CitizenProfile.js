@@ -295,7 +295,7 @@ export function CitizenProfile() {
                     
                 
             <div>
-                    <div>{getProperties}</div>
+                    <Button variant="dark" id="export" onClick={getProperties}>Show Properties</Button>
                     <div className="searchBar">
                         <input type="text" placeholder="Search Property Name" onChange={event => {setSearchTerm(event.target.value)}} />
                     </div>

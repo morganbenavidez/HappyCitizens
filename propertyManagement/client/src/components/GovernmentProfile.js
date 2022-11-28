@@ -86,12 +86,18 @@ function GovernmentProfile() {
                         <Button  id="export" variant="dark" onClick={() => window.print()}>Print</Button>
                         <Button id ="export" variant="dark" onClick={exportPdf}>Download PDF</Button>
                         <Button variant="dark" id="export" onClick={getProperties}>Show Properties</Button>
-                        
+
                         <div className="searchBar">
                         <input type="text" placeholder="Search Property Name" onChange={event => {setSearchTerm(event.target.value)}} />
                         </div>
                     </div>
-                        {propertyList.map((val, key) => {
+                        {propertyList.filter((val)=>{
+                        if (searchTerm == "") {
+                            return val
+                        } else if (val.propertyname.toLowerCase().includes(searchTerm.toLowerCase())){
+                            return val
+                        }
+                    }).map((val, key) => {
                             return (
                                 <div>
                                     <Table responsive="md" striped bordered hover variant="dark">

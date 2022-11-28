@@ -105,7 +105,13 @@ export function SuperUser() {
                         <input type="text" placeholder="Search Property Name" onChange={event => {setSearchTerm(event.target.value)}} />
                     </div>
                 </div>
-                    {propertyList.map((val, key) => {
+                    {propertyList.filter((val)=>{
+                        if (searchTerm == "") {
+                            return val
+                        } else if (val.propertyname.toLowerCase().includes(searchTerm.toLowerCase())){
+                            return val
+                        }
+                    }).map((val, key) => {
                         return (
                         <div>
                             <Table responsive="md" striped bordered hover variant="dark">
