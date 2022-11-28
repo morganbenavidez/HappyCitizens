@@ -141,9 +141,8 @@ export function CitizenProfile() {
         });
     }
 
-    const grantAccess = () => {
-        Axios.post("http://localhost:3001/grant/", { withCredentials: true }).then((response) => {
-            console.log("I'm posting")
+    const grantAccess = (username) => {
+        Axios.post(`http://localhost:3001/grant/${username}`, {}, { withCredentials: true }).then((response) => {
             if (response.data.success) {
                 console.log(response);
             }
@@ -290,7 +289,7 @@ export function CitizenProfile() {
                             placeholder='Username to Grant Access To'
                             onChange={event => {setAddedUser(event.target.value)}}
                             />
-                    <Button id="export" variant="dark" size="sm" onClick={grantAccess}>Grant</Button>
+                    <Button id="export" variant="dark" size="sm" onClick={()=>{grantAccess(addedUser)}}>Grant</Button>
             <div>
                     <Button variant="dark" id="export" onClick={getProperties}>Show Properties</Button>
                     <div className="searchBar">
