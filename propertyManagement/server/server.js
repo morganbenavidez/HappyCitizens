@@ -158,11 +158,10 @@ app.get('/me', ensureLoggedIn, (req, res) => {
 });
 
 /* Grant other users access to your properties */
-app.post('/grant', ensureLoggedIn, (req, res) => {
-    const granted = req.body.granted;
-    console.log(granted, req);
+app.post('/grant/:username', ensureLoggedIn, (req, res) => {
+    const username = req.params.username;
 
-    db.query('INSERT INTO accountaccess (userid, granted) VALUES (?,?)', [req.user.id, granted], (err, result) => {
+    db.query('INSERT INTO accountaccess (userid, granted) SELECT ?, userid FROM userinformation WHERE username = ?', [req.user.id, username], (err, result) => {
         if (err) {
             console.log(err);
             return res.send({
