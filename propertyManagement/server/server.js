@@ -239,8 +239,23 @@ app.get("/users", ensureLoggedIn, (req, res) => {
     });
 });
 
-/* Get Specific Users Properties */
+/* Get Specific property names */
 
+app.get("/properties/:propertyname", ensureLoggedIn, (req, res) => {
+    if (req.user.access != CATEGORY_SUPERUSER) {
+        return res.send({success: false, message: "No permissions"});
+    }
+
+    db.query("SELECT * FROM property WHERE propertyowner = ?", [req.params.property], (err, result) => {
+        if (err) {
+            console.log(err);
+            return res.send({success: false});
+        }
+        return res.send({success: true, data: result});
+    });
+});
+
+/* Get Specific Users Properties */
 app.get("/properties/:userid", ensureLoggedIn, (req, res) => {
     if (req.user.access != CATEGORY_SUPERUSER) {
         return res.send({success: false, message: "No permissions"});

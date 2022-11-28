@@ -5,6 +5,7 @@ import { useState } from "react";
 import "./../Form.css";
 import "./../FormInput.css";
 import 'bootstrap/dist/css/bootstrap.min.css';
+import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import Table from 'react-bootstrap/Table';
 import jsPDF from 'jspdf';
@@ -115,6 +116,17 @@ export function CitizenProfile() {
             }
         });
     }
+
+    const getPropertyNames = () => {
+        Axios.get('http://localhost:3001/:propertyname', { withCredentials: true }).then((response) => {
+            if (response.data.success) {
+                setPropertyList(response.data.properties);
+                console.log(response);
+            }
+        });
+    }
+
+    
 
 
     const updatePropertyName = (id) => {
@@ -285,6 +297,13 @@ export function CitizenProfile() {
                 
             <div>
                     <Button variant="dark" size="sm" onClick={getProperties}>Show Properties</Button>
+                    <Form className="d-flex">
+                                        <Form.Control
+                                        type="search"
+                                        placeholder="Search"
+                                        className="me-2"
+                                        aria-label="Search"
+                                        /></Form>
                     {propertyList.map((val, key) => {
                         return (
                         
