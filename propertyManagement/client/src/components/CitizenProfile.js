@@ -38,6 +38,7 @@ export function CitizenProfile() {
     const [newName, setNewName] = useState(0);
 
     const [searchTerm, setSearchTerm] = useState('');
+    const [addedUser, setAddedUser] = useState(''); 
 
 
     function validateData(){
@@ -119,15 +120,6 @@ export function CitizenProfile() {
         });
     }
 
-    const getPropertyNames = () => {
-        Axios.get('http://localhost:3001/:propertyname', { withCredentials: true }).then((response) => {
-            if (response.data.success) {
-                setPropertyList(response.data.properties);
-                console.log(response);
-            }
-        });
-    }
-
     const updatePropertyName = (id) => {
         Axios.put(`http://localhost:3001/update/${id}`, {
           propertyname: newName, 
@@ -149,9 +141,15 @@ export function CitizenProfile() {
         });
     }
 
-    const grantAccess = (id) => {
-        Axios.get('http://localhost:3001/grant/${id}') 
+    const grantAccess = () => {
+        Axios.post("http://localhost:3001/grant/", { withCredentials: true }).then((response) => {
+            console.log("I'm posting")
+            if (response.data.success) {
+                console.log(response);
+            }
+        });
     }
+
 
 
     const exportPdf = () => {
@@ -288,12 +286,11 @@ export function CitizenProfile() {
                         <Button variant="dark" size="sm" onClick={validateData}>Add Property</Button>
                     </form>
                     <input
-                            type='number'
+                            type='text'
                             placeholder='Username to Grant Access To'
+                            onChange={event => {setAddedUser(event.target.value)}}
                             />
                     <Button id="export" variant="dark" size="sm" onClick={grantAccess}>Grant</Button>
-                    
-                
             <div>
                     <Button variant="dark" id="export" onClick={getProperties}>Show Properties</Button>
                     <div className="searchBar">
