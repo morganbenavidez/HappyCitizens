@@ -14,7 +14,6 @@ import { toPng, toJpeg, toBlob, toPixelData, toSvg } from 'html-to-image';
 
 
 
-
 export function CitizenProfile() {
 
     var userid = localStorage.getItem("userid");
@@ -38,6 +37,8 @@ export function CitizenProfile() {
 
     const [newName, setNewName] = useState(0);
 
+    const [searchTerm, setSearchTerm] = useState('');
+
 
     function validateData(){
         if (propertyname &&
@@ -45,7 +46,7 @@ export function CitizenProfile() {
             state &&
             purchaseprice &&
             propertycategory){
-                addProperty(); 
+                addProperty();
 
         }
     }
@@ -73,6 +74,7 @@ export function CitizenProfile() {
                     propertycategory: propertycategory,
                 },
             ])
+        getProperties();
         });
     };
 
@@ -137,7 +139,7 @@ export function CitizenProfile() {
           setPropertyList(propertyList.map((val) => {
             return val.propertyid == id ? {propertyid: val.propertyid, propertyname: newName, 
               propertyowner: userid, city: val.city, state: val.state, 
-              purchaseprice: val.purchaseprice, propertycategory: val.propertycategory} :val
+              purchaseprice: val.purchaseprice, category: val.category} :val
           }))
         })
     }
@@ -297,14 +299,16 @@ export function CitizenProfile() {
                 
             <div>
                     <Button variant="dark" size="sm" onClick={getProperties}>Show Properties</Button>
-                    <Form className="d-flex">
-                                        <Form.Control
-                                        type="search"
-                                        placeholder="Search"
-                                        className="me-2"
-                                        aria-label="Search"
-                                        /></Form>
-                    {propertyList.map((val, key) => {
+                    <div className="searchBar">
+                        <input type="text" placeholder="Search Property Name" onChange={event => {setSearchTerm(event.target.value)}} />
+                    </div>
+                    {propertyList.filter((val)=>{
+                        if (searchTerm == "") {
+                            return val
+                        } else if (val.propertyname.toLowerCase().includes(searchTerm.toLowerCase())){
+                            return val
+                        }
+                    }).map((val, key) => {
                         return (
                         
                         <div>
