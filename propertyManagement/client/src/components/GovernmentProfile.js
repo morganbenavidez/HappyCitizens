@@ -80,10 +80,10 @@ function GovernmentProfile() {
             <div className="information">
                 <h3>{name} {lastname} - Government Profile</h3>
                 </div>
-                    <div>
-                        <Button  variant="dark" onClick={() => window.print()}>Print</Button>
-                        <Button variant="dark" onClick={exportPdf}>Download PDF</Button>
-                        <Button variant="dark" onClick={getProperties}>Show Properties</Button>
+                    <div className="information">
+                        <Button  id="export" variant="dark" onClick={() => window.print()}>Print</Button>
+                        <Button id ="export" variant="dark" onClick={exportPdf}>Download PDF</Button>
+                        <Button variant="dark" id="export" onClick={getProperties}>Show Properties</Button>
                     </div>
                         {propertyList.map((val, key) => {
                             return (

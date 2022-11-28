@@ -34,7 +34,9 @@ export function SuperUser() {
         Axios.put('http://localhost:3001/update', {
           propertyname: newName, 
           propertyid: id,
-        }).then((response) => {
+        }, 
+        { withCredentials: true })
+        .then((response) => {
           setPropertyList(propertyList.map((val) => {
             return val.propertyid == id ? {propertyid: val.propertyid, propertyname: newName, 
               propertyowner: userid, city: val.city, state: val.state, 
@@ -44,7 +46,7 @@ export function SuperUser() {
     }
 
     const deleteProperty = (id) => {
-        Axios.delete(`http://localhost:3001/delete/${id}`).then((response)=> {
+        Axios.delete(`http://localhost:3001/delete/${id}`,{ withCredentials: true }).then((response)=> {
           setPropertyList(propertyList.filter((val)=> {
             return val.propertyid != id
           }))
@@ -93,10 +95,10 @@ export function SuperUser() {
             <div className="App">
             <div className="information">
                 <h3>{name} {lastname} - Super User</h3>
-                <div>
-                    <Button  variant="dark" onClick={() => window.print()}>Print</Button>
-                    <Button variant="dark" onClick={exportPdf}>Download PDF</Button>
-                    <Button variant="dark" onClick={getProperties}>Show Properties</Button>
+                <div className="information">
+                    <Button  variant="dark" id="export" onClick={() => window.print()}>Print</Button>
+                    <Button variant="dark" id="export" onClick={exportPdf}>Download PDF</Button>
+                    <Button variant="dark" id="export" onClick={getProperties}>Show Properties</Button>
                 </div>
                     {propertyList.map((val, key) => {
                         return (
@@ -129,8 +131,8 @@ export function SuperUser() {
                                             }} 
                                         />
                                         </td>
-                                        <td><button onClick={()=>{updatePropertyName(val.propertyid)}}>Update</button></td>
-                                        <td><button onClick={()=>{deleteProperty(val.propertyid)}}>Delete</button></td>
+                                        <td><Button variant="dark" size="sm" onClick={()=>{updatePropertyName(val.propertyid)}}>Update</Button></td>
+                                        <td><Button variant="dark" size="sm" onClick={()=>{deleteProperty(val.propertyid)}}>Delete</Button></td>
                                     </tr>
                                 </tbody>
                             </Table>

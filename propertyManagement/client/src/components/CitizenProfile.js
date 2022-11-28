@@ -121,7 +121,7 @@ export function CitizenProfile() {
         Axios.put('http://localhost:3001/update', {
           propertyname: newName, 
           propertyid: id,
-        }).then((response) => {
+        },{ withCredentials: true }).then((response) => {
           setPropertyList(propertyList.map((val) => {
             return val.propertyid == id ? {propertyid: val.propertyid, propertyname: newName, 
               propertyowner: userid, city: val.city, state: val.state, 
@@ -131,7 +131,7 @@ export function CitizenProfile() {
     }
 
     const deleteProperty = (id) => {
-        Axios.delete(`http://localhost:3001/delete/${id}`).then((response)=> {
+        Axios.delete(`http://localhost:3001/delete/${id}`, { withCredentials: true }).then((response)=> {
           setPropertyList(propertyList.filter((val)=> {
             return val.propertyid != id
           }))
@@ -168,8 +168,8 @@ export function CitizenProfile() {
                 <div className="information">
                     <p>Net Worth: ${netWorth()}</p>
                     <h3>{name} {lastname} - Citizen Profile</h3>
-                    <button id ="export" onClick={() => window.print()}>Print</button>
-                    <button id="export" onClick={exportPdf}>Download PDF</button>
+                    <Button variant="dark" size="sm" id ="export" onClick={() => window.print()}>Print</Button>
+                    <Button variant="dark" size="sm" id="export" onClick={exportPdf}>Download PDF</Button>
 
 
                     <form className = "formInput container-fluid">
@@ -274,13 +274,13 @@ export function CitizenProfile() {
                                 <option value="Boat">Boat</option>
                             </select>
                         </label>
-                        <button onClick={validateData}>Add Property</button>
+                        <Button variant="dark" size="sm" onClick={validateData}>Add Property</Button>
                     </form>
                     <input
                             type='number'
                             placeholder='Username to Grant Access To'
                             />
-                    <Button variant="dark" size="sm" onClick={grantAccess}>Grant</Button>
+                    <Button id="export" variant="dark" size="sm" onClick={grantAccess}>Grant</Button>
                     
                 
             <div>
@@ -317,8 +317,8 @@ export function CitizenProfile() {
                                             }} 
                                         />
                                         </td>
-                                        <td><button onClick={()=>{updatePropertyName(val.propertyid)}}>Update</button></td>
-                                        <td><button onClick={()=>{deleteProperty(val.propertyid)}}>Delete</button></td>
+                                        <td><Button variant="dark" size="sm" onClick={()=>{updatePropertyName(val.propertyid)}}>Update</Button></td>
+                                        <td><Button variant="dark" size="sm" onClick={()=>{deleteProperty(val.propertyid)}}>Delete</Button></td>
                                     </tr>
                                 </tbody>
                             </Table>
