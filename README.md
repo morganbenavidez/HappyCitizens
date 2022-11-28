@@ -7,7 +7,7 @@ Principles of Software Engineering Project
     <li>
       <a href="#about-the-project">About The Project</a>
       <ul>
-        <li><a href="#built-with">Built With</a></li>
+        <li><a href="#built-with">Built With </a></li>
       </ul>
     </li>
     <li>
@@ -24,6 +24,8 @@ Principles of Software Engineering Project
 </details>
 <!-- ABOUT THE PROJECT -->
 ## About The Project
+  The citizen will be able to create a secure property account, along with being able to add, remove, print, search, download, and edit records. The City of Happy Citizens will have the ability to view, but not edit, customer property records. The citizens will also be able to calculate the overall value of their property so that they can get a sense of their net worth and financial standing. This feature will collect data about the item’s current value to keep the numbers accurate. 
+
 
 [![Product Name Screen Shot][product-screenshot]](https://example.com)
 
