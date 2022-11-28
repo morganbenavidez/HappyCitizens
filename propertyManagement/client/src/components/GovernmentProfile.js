@@ -21,6 +21,8 @@ function GovernmentProfile() {
     const [state, setState] = useState('');
     const [purchaseprice, setPurchasePrice] = useState('');
     const [propertycategory, setPropertyCategory] = useState('');
+    const [searchTerm, setSearchTerm] = useState('');
+
 
     const [propertyStatus, setPropertyStatus] = useState('');
 
@@ -84,6 +86,10 @@ function GovernmentProfile() {
                         <Button  id="export" variant="dark" onClick={() => window.print()}>Print</Button>
                         <Button id ="export" variant="dark" onClick={exportPdf}>Download PDF</Button>
                         <Button variant="dark" id="export" onClick={getProperties}>Show Properties</Button>
+                        
+                        <div className="searchBar">
+                        <input type="text" placeholder="Search Property Name" onChange={event => {setSearchTerm(event.target.value)}} />
+                        </div>
                     </div>
                         {propertyList.map((val, key) => {
                             return (

@@ -16,6 +16,8 @@ export function SuperUser() {
 
     const [newName, setNewName] = useState(0);
     const [propertycategory, setPropertyCategory] = useState('');
+    const [searchTerm, setSearchTerm] = useState('');
+
 
     const [propertyList, setPropertyList] = useState([]);
 
@@ -99,6 +101,9 @@ export function SuperUser() {
                     <Button  variant="dark" id="export" onClick={() => window.print()}>Print</Button>
                     <Button variant="dark" id="export" onClick={exportPdf}>Download PDF</Button>
                     <Button variant="dark" id="export" onClick={getProperties}>Show Properties</Button>
+                    <div className="searchBar">
+                        <input type="text" placeholder="Search Property Name" onChange={event => {setSearchTerm(event.target.value)}} />
+                    </div>
                 </div>
                     {propertyList.map((val, key) => {
                         return (
