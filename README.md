@@ -80,7 +80,7 @@ Below are instructions on how to run the program on your device
    ```
 3. Go to http://localhost:3000/ to use the application 
 
-### Contact information for any inquiries 
+#### Contact information for any inquiries: 
 - Batia Segal: bsegal2021@fau.edu 
 - Kevin Infante: kinfante2019@fau.edu
 - Connor Stearn: cstearn2018@fau.edu
