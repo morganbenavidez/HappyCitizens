@@ -7,7 +7,7 @@ Principles of Software Engineering Project
     <li>
       <a href="#about-the-project">About The Project</a>
       <ul>
-        <li><a href="#built-with">Built With </a></li>
+        <li><a href="#built-with">Built With</a></li>
       </ul>
     </li>
     <li>
@@ -23,21 +23,68 @@ Principles of Software Engineering Project
   </ol>
 </details>
 <!-- ABOUT THE PROJECT -->
+
 ## About The Project
-  The citizen will be able to create a secure property account, along with being able to add, remove, print, search, download, and edit records. The City of Happy Citizens will have the ability to view, but not edit, customer property records. The citizens will also be able to calculate the overall value of their property so that they can get a sense of their net worth and financial standing. This feature will collect data about the item’s current value to keep the numbers accurate. 
 
+There seems to be a need for citizens to keep track of their property in case of natural disaster and crisis. The need is that oftentimes citizens run into issues of property theft and damage and need a way to track that so that they can properly create the detailed reports necessary so that they file a claim to the insurance. Therefore, The City of Happy Citizens is seeking to provide such a service and our team is willing and capable to provide it. 
 
-[![Product Name Screen Shot][product-screenshot]](https://example.com)
+### Built With
+* React.js
+* Axios
+* Bootstrap
+* Node.js
+* Sql 
 
-There are many great README templates available on GitHub; however, I didn't find one that really suited my needs so I created this enhanced one. I want to create a README template so amazing that it'll be the last one you ever need -- I think this is it.
+<!-- GETTING STARTED -->
+## Getting Started
+Below are instructions on how to run the program on your device
 
-Here's why:
-* Your time should be focused on creating something amazing. A project that solves a problem and helps others
-* You shouldn't be doing the same tasks over and over like creating a README from scratch
-* You should implement DRY principles to the rest of your life :smile:
+### Dependencies
+1. Clone the repo
+   ```sh
+   git clone [https://github.com/morganbenavidez/HappyCitizens.git]
+   ```
+2. Install NPM packages in client directory 
+   ```sh
+   npm install react
+   ```
+   ```sh
+   npm install react-router-dom
+   ```
+   ```sh
+   npm install react-bootstrap bootstrap
+   ```
+3. Install NPM packages in server directory
+   ```sh
+   npm install express mysql cors crypto passport passport-local express-session cookie-parser connect-ensure-login
+   ```
+### Starting up the database 
+1. Install XAMPP
+- Tutorial for Windows: https://www.youtube.com/watch?v=_TDiZWoiewk
+- Tutorial for Mac: https://youtu.be/1GevfhBGGWs
+2. Open the app and navigate to the manage servers tab
+3. Configure the MySQL port and set it to 3306
+4. Navigate to the applications directory and go to XAMPP/bin and press on the "mysql" file. 
+5. Start up MySQL database, ProFTPD, and Apache Web Server
+6. Go to http://localhost/phpmyadmin/ to view the database
+7. Import the database and call it "happyc" 
 
-Of course, no one template will serve all projects since your needs may be different. So I'll be adding more in the near future. You may also suggest changes by forking this repo and creating a pull request or opening an issue. Thanks to all the people have contributed to expanding this template!
+### Starting up the application
+1. Navigate to the client directory in the terminal and type: 
+   ```sh
+   npm start
+   ```
+2. Navigate to the server directory in the terminal and type: 
+   ```sh
+   node server.js 
+   ```
+3. Go to http://localhost:3000/ to use the application 
 
-Use the `BLANK_README.md` to get started.
+### Contact information for any inquiries 
+- Batia Segal: bsegal2021@fau.edu 
+- Kevin Infante: kinfante2019@fau.edu
+- Connor Stearn: cstearn2018@fau.edu
+- Zachary Paul: zpaul2021@fau.edu 
+- Vincent Joel Morales: vmorales2017@fau.edu
+- Morgan Benavidez: mbenavidez2020@fau.edu
 
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
