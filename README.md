@@ -46,20 +46,11 @@ Below are instructions on how to run the program on your device
    ```
 2. Install NPM packages in client directory 
    ```sh
-   npm install react
-   ```
-   ```sh
-   npm install react-router-dom
-   ```
-   ```sh
-   npm install react-bootstrap bootstrap
-   ```
-   ```sh
-   npm install html-to-image and jspdf
+   npm install 
    ```
 3. Install NPM packages in server directory
    ```sh
-   npm install express mysql cors crypto passport passport-local express-session cookie-parser connect-ensure-login
+   npm install 
    ```
 ### Starting up the database 
 1. Install XAMPP
