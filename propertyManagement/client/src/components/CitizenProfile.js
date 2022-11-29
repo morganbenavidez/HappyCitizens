@@ -1,3 +1,4 @@
+//importing necessary files
 import Axios from "axios";
 import React from "react";
 import { responsivePropType } from "react-bootstrap/esm/createUtilityClasses";
@@ -5,6 +6,7 @@ import { useState } from "react";
 import "./../Form.css";
 import "./../FormInput.css";
 import 'bootstrap/dist/css/bootstrap.min.css';
+import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import Table from 'react-bootstrap/Table';
 import jsPDF from 'jspdf';
@@ -13,7 +15,10 @@ import { toPng, toJpeg, toBlob, toPixelData, toSvg } from 'html-to-image';
 
 
 
+
 export function CitizenProfile() {
+
+    //creating variables to store citizen user profiles
 
     var userid = localStorage.getItem("userid");
     var username = localStorage.getItem("username");
@@ -23,6 +28,10 @@ export function CitizenProfile() {
     var email = localStorage.getItem("email");
     var phone = localStorage.getItem("phone");
     
+
+
+    //creating functions to use later for properties
+
     const [propertyname, setPropertyName] = useState('');
     const [propertyowner, setPropertyOwner] = useState('');
     const [city, setCity] = useState('');
@@ -31,14 +40,21 @@ export function CitizenProfile() {
     const [propertycategory, setPropertyCategory] = useState('');
     const [propertyList, setPropertyList] = useState([]);
     const [propertyPrices, setPropertyPrices] = useState([]);
-
     const [propertyStatus, setPropertyStatus] = useState('');
 
+
+    //creating functions to use for update calls
+
     const [newName, setNewName] = useState(0);
+
+
+    //creating functions to use for searchbar and filtering by propertyname
 
     const [searchTerm, setSearchTerm] = useState('');
     const [addedUser, setAddedUser] = useState(''); 
 
+
+    //function to validate data for adding properties before sending to backend 
 
     function validateData(){
         if (propertyname &&
@@ -50,6 +66,9 @@ export function CitizenProfile() {
 
         }
     }
+
+
+    //function to add property to citizen profile account
 
     const addProperty = () => {
         Axios.post('http://localhost:3001/create', {
@@ -74,9 +93,13 @@ export function CitizenProfile() {
                     propertycategory: propertycategory,
                 },
             ])
+            //fetches properties again to refresh the list of properties
         getProperties();
         });
     };
+
+
+    //function to calculate the networth of user logged in accoring to properties displayed on the page
 
     const netWorth = () => {
         var sum = 0; 
@@ -90,6 +113,9 @@ export function CitizenProfile() {
         }
     }
 
+
+    //function to display name of the property category
+
     const propertyCategoryName = (propertycategory) => {
         if(propertycategory == 1){
             return 'Land'
@@ -98,7 +124,7 @@ export function CitizenProfile() {
         } else if(propertycategory == 3){
             return 'Electronics'
         } else if(propertycategory == 4){
-            return 'Jewlery'
+            return 'Jewelry'
         } else if(propertycategory == 5){
             return 'Single-Family Home'
         } else if(propertycategory == 6){
@@ -110,6 +136,8 @@ export function CitizenProfile() {
         }
     }
     
+    //function to get properties for the specific user on their page
+
     const getProperties = () => {
         Axios.get('http://localhost:3001/properties', { withCredentials: true }).then((response) => {
             if (response.data.success) {
@@ -119,12 +147,16 @@ export function CitizenProfile() {
         });
     }
 
+
+    //function to update name of property for the user on their page
+
     const updatePropertyName = (id) => {
         Axios.put(`http://localhost:3001/update/${id}`, {
           propertyname: newName, 
           propertyid: id,
         },{ withCredentials: true }).then((response) => {
           setPropertyList(propertyList.map((val) => {
+            //after values get passed in for the update, the page gets updated to reflect the property with the new name
             return val.propertyid == id ? {propertyid: val.propertyid, propertyname: newName, 
               propertyowner: userid, city: val.city, state: val.state, 
               purchaseprice: val.purchaseprice, category: val.category} :val
@@ -132,13 +164,20 @@ export function CitizenProfile() {
         })
     }
 
+
+    //function to delete properties from specific users property list
+
     const deleteProperty = (id) => {
         Axios.delete(`http://localhost:3001/delete/${id}`, { withCredentials: true }).then((response)=> {
           setPropertyList(propertyList.filter((val)=> {
+            //after value gets passed in for delete, the page gets updated to show all properties that do not have the id of the property you deleted
             return val.propertyid != id
           }))
         });
     }
+
+
+    //function to grant access for other user registered with the database
 
     const grantAccess = (username) => {
         Axios.post(`http://localhost:3001/grant/${username}`, {}, { withCredentials: true }).then((response) => {
@@ -149,6 +188,7 @@ export function CitizenProfile() {
     }
 
 
+    //function to download a pdf file of the properties list
 
     const exportPdf = () => {
 
@@ -168,13 +208,18 @@ export function CitizenProfile() {
 
     
 
-
+    //return call building the page
+    
     return (
-        <div id="myPage">
+        <div>
             <div className="App">
                 <div className="information">
+                    
+                    {/*calling networth function to calculate all property costs together */}
+                    
                     <p>Net Worth: ${netWorth()}</p>
                     <h3>{name} {lastname} - Citizen Profile</h3>
+                    {/*buttons for printing and downloading pdf of property page/list*/}
                     <Button variant="dark" size="sm" id ="export" onClick={() => window.print()}>Print</Button>
                     <Button variant="dark" size="sm" id="export" onClick={exportPdf}>Download PDF</Button>
 
@@ -182,6 +227,7 @@ export function CitizenProfile() {
                     <form className = "formInput container-fluid">
                         <h3>Add a property</h3>
                         <label>
+                            {/*input for adding property name using onchange event to store property name */}
                             Property Name
                             <input 
                             type="text"
@@ -192,6 +238,7 @@ export function CitizenProfile() {
                             required="true"/>
                         </label>
                         <label>
+                            {/*input for adding city name using onchange event to store city name*/}
                             City
                             <input 
                             type='text'
@@ -202,6 +249,7 @@ export function CitizenProfile() {
                             required="true"/>
                         </label>
                         <label>
+                            {/*input for selecting state using onchange event to store state*/}
                             State
                             <select required="true" onChange={(e) => {setState(e.target.value);}}>
                             <option value="h" disabled selected hidden>State</option>
@@ -259,6 +307,7 @@ export function CitizenProfile() {
                         </select>
                         </label>
                         <label>
+                            {/*input for adding purchase price using onchange event to store purchase price*/}
                             Purchase Price
                             <input 
                             type='number'
@@ -268,6 +317,7 @@ export function CitizenProfile() {
                             required="true"/>
                         </label>
                         <label>
+                            {/*input for selecting property name using onchange event to store property category*/}
                             Category
                             <select required="true" onChange={(e) => {setPropertyCategory(e.target.value);}}>
                                 <option value="h" disabled selected hidden>Property category</option>
@@ -281,19 +331,26 @@ export function CitizenProfile() {
                                 <option value="Boat">Boat</option>
                             </select>
                         </label>
+                        {/*button to call validate data function to make sure input is valid then adds property once it is valid*/}
                         <Button variant="dark" size="sm" onClick={validateData}>Add Property</Button>
                     </form>
                     <input
+                        //onchange event to store username to use in grant access function
                             type='text'
                             placeholder='Username to Grant Access To'
                             onChange={event => {setAddedUser(event.target.value)}}
                             />
-                    <Button id="export" variant="dark" size="sm" onClick={()=>{grantAccess(addedUser)}}>Grant</Button>
-            <div>
-                    <Button variant="dark" id="export" onClick={getProperties}>Show Properties</Button>
+                        {/*button to call grant access function to allow other users to access properties*/}
+                        <Button id="export" variant="dark" size="sm" onClick={()=>{grantAccess(addedUser)}}>Grant</Button>
+                     {/*button to show property list*/}
+                     <Button variant="dark" id="export" onClick={getProperties}>Show Properties</Button>
+                    {/*input for searchbar*/}
                     <div className="searchBar">
                         <input type="text" placeholder="Search Property Name" onChange={event => {setSearchTerm(event.target.value)}} />
                     </div>
+            <div id="myPage">
+                    {/*lists out properties through a filter that is only used if search contains something inside
+                    if searchbar is empty, then propertylist is mapped out normally*/}
                     {propertyList.filter((val)=>{
                         if (searchTerm == "") {
                             return val
@@ -302,7 +359,7 @@ export function CitizenProfile() {
                         }
                     }).map((val, key) => {
                         return (
-                        
+                    //table of property information
                         <div>
                             <Table responsive="md" striped bordered hover variant="dark">
                                 <thead>
@@ -324,6 +381,7 @@ export function CitizenProfile() {
                                         <td>{val.state}</td>
                                         <td>{val.purchaseprice}</td>
                                         <td>{propertyCategoryName(val.category)}</td>
+                                        {/*column allowing for user to update property using onchange event to store new name*/}
                                         <td><input 
                                             type="text" 
                                             placeholder="New Name" 
@@ -332,6 +390,7 @@ export function CitizenProfile() {
                                             }} 
                                         />
                                         </td>
+                                        {/*buttons to call update or delete property functions*/}
                                         <td><Button variant="dark" size="sm" onClick={()=>{updatePropertyName(val.propertyid)}}>Update</Button></td>
                                         <td><Button variant="dark" size="sm" onClick={()=>{deleteProperty(val.propertyid)}}>Delete</Button></td>
                                     </tr>
