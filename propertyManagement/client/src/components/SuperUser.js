@@ -33,16 +33,14 @@ export function SuperUser() {
 
 
     const updatePropertyName = (id) => {
-        Axios.put('http://localhost:3001/update', {
+        Axios.put(`http://localhost:3001/update/${id}`, {
           propertyname: newName, 
           propertyid: id,
-        }, 
-        { withCredentials: true })
-        .then((response) => {
+        },{ withCredentials: true }).then((response) => {
           setPropertyList(propertyList.map((val) => {
             return val.propertyid == id ? {propertyid: val.propertyid, propertyname: newName, 
               propertyowner: userid, city: val.city, state: val.state, 
-              purchaseprice: val.purchaseprice, propertycategory: val.propertycategory} :val
+              purchaseprice: val.purchaseprice, category: val.category} :val
           }))
         })
     }
