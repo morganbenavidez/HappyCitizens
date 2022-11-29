@@ -83,7 +83,7 @@ function GovernmentProfile() {
 
     //return call building the page
     return (
-        <div>
+        <div id="myPage">
             <div className="App">
             <div className="information">
                 <h3>{name} {lastname} - Government Profile</h3>
