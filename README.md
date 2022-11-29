@@ -75,6 +75,10 @@ Below are instructions on how to run the program on your device
 3. Go to http://localhost:3000/ to use the application 
 
 #### Contact information for any inquiries: 
+
+
+
+
 - Batia Segal: bsegal2021@fau.edu 
 - Kevin Infante: kinfante2019@fau.edu
 - Connor Stearn: cstearn2018@fau.edu
@@ -82,3 +86,5 @@ Below are instructions on how to run the program on your device
 - Vincent Joel Morales: vmorales2017@fau.edu
 - Morgan Benavidez: mbenavidez2020@fau.edu
 
+
+https://user-images.githubusercontent.com/93624006/204432028-2ddf94a4-e980-4905-ac29-708748c11502.mp4
