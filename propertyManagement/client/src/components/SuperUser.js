@@ -1,4 +1,4 @@
-
+//imports
 import Axios from "axios";
 import React from "react";
 import { useState } from "react";
@@ -10,16 +10,21 @@ import * as htmlToImage from 'html-to-image';
 
 export function SuperUser() {
     
+    //creating variables to store super user profiles
     var userid = localStorage.getItem("userid");
     var name = localStorage.getItem("name");
     var lastname = localStorage.getItem("lastname");
 
+
+    //creating functions to use later for updating, searching, and displaying properties
+
     const [newName, setNewName] = useState(0);
     const [propertycategory, setPropertyCategory] = useState('');
     const [searchTerm, setSearchTerm] = useState('');
-
-
     const [propertyList, setPropertyList] = useState([]);
+
+
+    //creating function to display all properties
 
     const getProperties = () => {
         Axios.get('http://localhost:3001/allproperties', { withCredentials: true }).then((response) => {
@@ -32,12 +37,15 @@ export function SuperUser() {
     }
 
 
+    //function to update property name
+
     const updatePropertyName = (id) => {
         Axios.put(`http://localhost:3001/update/${id}`, {
           propertyname: newName, 
           propertyid: id,
         },{ withCredentials: true }).then((response) => {
           setPropertyList(propertyList.map((val) => {
+            //after values get passed in for update, page gets updated to reflect new property name
             return val.propertyid == id ? {propertyid: val.propertyid, propertyname: newName, 
               propertyowner: userid, city: val.city, state: val.state, 
               purchaseprice: val.purchaseprice, category: val.category} :val
@@ -45,13 +53,20 @@ export function SuperUser() {
         })
     }
 
+
+    //function to delete property from account
+
     const deleteProperty = (id) => {
         Axios.delete(`http://localhost:3001/delete/${id}`,{ withCredentials: true }).then((response)=> {
           setPropertyList(propertyList.filter((val)=> {
+            //after values get passed for delete, page shows all properties with id not equal to deleted property
             return val.propertyid != id
           }))
         });
     }
+
+    
+    //function to download pdf file
 
     const exportPdf = () => {
 
@@ -69,6 +84,9 @@ export function SuperUser() {
    
     }
 
+
+    //function to get display name of property category
+
     const propertyCategoryName = (propertycategory) => {
         if(propertycategory == 1){
             return 'Land'
@@ -77,7 +95,7 @@ export function SuperUser() {
         } else if(propertycategory == 3){
             return 'Electronics'
         } else if(propertycategory == 4){
-            return 'Jewlery'
+            return 'Jewelry'
         } else if(propertycategory == 5){
             return 'Single-Family Home'
         } else if(propertycategory == 6){
@@ -90,19 +108,29 @@ export function SuperUser() {
     }
 
 
+    //return call building the page
+
     return (
         <div id="myPage">
             <div className="App">
             <div className="information">
                 <h3>{name} {lastname} - Super User</h3>
                 <div className="information">
-                    <Button  variant="dark" id="export" onClick={() => window.print()}>Print</Button>
+
+                     {/* buttons to print page, download a pdf of the page, and to show the properties*/}
+
+                    <Button variant="dark" id="export" onClick={() => window.print()}>Print</Button>
                     <Button variant="dark" id="export" onClick={exportPdf}>Download PDF</Button>
                     <Button variant="dark" id="export" onClick={getProperties}>Show Properties</Button>
+                   
+                    {/*search bar input */}
+
                     <div className="searchBar">
                         <input type="text" placeholder="Search Property Name" onChange={event => {setSearchTerm(event.target.value)}} />
                     </div>
                 </div>
+                 {/*lists out properties through a filter that is only used if search contains something inside
+                    if searchbar is empty, then propertylist is mapped out normally*/}
                     {propertyList.filter((val)=>{
                         if (searchTerm == "") {
                             return val
@@ -111,6 +139,7 @@ export function SuperUser() {
                         }
                     }).map((val, key) => {
                         return (
+                            //table of property information
                         <div>
                             <Table responsive="md" striped bordered hover variant="dark">
                                 <thead>
@@ -132,6 +161,7 @@ export function SuperUser() {
                                         <td>{val.state}</td>
                                         <td>{val.purchaseprice}</td>
                                         <td>{propertyCategoryName(val.category)}</td>
+                                         {/*column allowing for user to update property using onchange event to store new name*/}
                                         <td><input 
                                             type="text" 
                                             placeholder="New Name" 
@@ -140,6 +170,7 @@ export function SuperUser() {
                                             }} 
                                         />
                                         </td>
+                                        {/*buttons to call update or delete property functions*/}
                                         <td><Button variant="dark" size="sm" onClick={()=>{updatePropertyName(val.propertyid)}}>Update</Button></td>
                                         <td><Button variant="dark" size="sm" onClick={()=>{deleteProperty(val.propertyid)}}>Delete</Button></td>
                                     </tr>

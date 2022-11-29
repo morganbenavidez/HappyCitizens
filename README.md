@@ -54,6 +54,9 @@ Below are instructions on how to run the program on your device
    ```sh
    npm install react-bootstrap bootstrap
    ```
+   ```sh
+   npm install html-to-image and jspdf
+   ```
 3. Install NPM packages in server directory
    ```sh
    npm install express mysql cors crypto passport passport-local express-session cookie-parser connect-ensure-login
