@@ -70,7 +70,7 @@ Below are instructions on how to run the program on your device
 4. Navigate to the applications directory and go to XAMPP/bin and press on the "mysql" file. 
 5. Start up MySQL database, ProFTPD, and Apache Web Server
 6. Go to http://localhost/phpmyadmin/ to view the database
-7. Import the database and call it "happyc" 
+7. Import the sql database and call it "happyc" 
 
 ### Starting up the application
 1. Navigate to the client directory in the terminal and type: 
