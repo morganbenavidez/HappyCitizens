@@ -149,7 +149,7 @@ function CreateAccountForm() {
                 onChange={onChange}/>
             ))}
             <h2>{loginStatus}</h2>
- <button onClick={(e) => {validateUser()}}>Register</button>        </form>
+ <button type="button" onClick={(e) => {validateUser()}}>Register</button>        </form>
     </div>
   )
 }
